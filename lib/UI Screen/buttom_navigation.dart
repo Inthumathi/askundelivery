@@ -1,8 +1,10 @@
+import 'package:askun_delivery_app/UI%20Screen/searchpage/serachpage.dart';
 import 'package:diamond_bottom_bar/diamond_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import '../utilites/constant.dart';
 import 'demo.dart';
 import 'homepage/homepage.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 
 class BottomNavigation extends StatefulWidget {
@@ -17,7 +19,7 @@ class BottomNavigationState extends State<BottomNavigation> {
   final widgetOptions = [
     HomeScreen(),
     DemoPage(),
-    HomeScreen(),
+    serachPage(),
     DemoPage(),
     HomeScreen(),
 
@@ -26,17 +28,22 @@ class BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: widgetOptions.elementAt(selectedIndex),
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          content: Text('Tap back again to leave'),
+        ),
+        child: Center(
+          child: widgetOptions.elementAt(selectedIndex),
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
         child: DiamondBottomNavigation(
           itemIcons: const [
             Icons.home,
-            Icons.notifications,
-            Icons.message,
-            Icons.account_box,
+            Icons.card_travel,
+            Icons.work_history_rounded,
+            Icons.person,
           ],
           centerIcon: Icons.search_rounded,
           selectedIndex: selectedIndex,

@@ -42,4 +42,8 @@ class MyStrings{
   static const String logOut =  'Log Out';
 
 
+  // Search
+  static const String searchProduct =  'Search Product';
+
+
 }

@@ -1,6 +1,8 @@
 import 'dart:core';
 
+import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -64,22 +66,10 @@ class Service {
   Service({required this.cateName, required this.img});
 }
 
-class Picks {
-  final String cateName;
-  final String img;
-
-  Picks({required this.cateName, required this.img});
-}
-
-class Groceries {
-  final String cateName;
-  final String img;
-
-  Groceries({required this.cateName, required this.img});
-}
-
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -138,6 +128,55 @@ class _HomeScreenState extends State<HomeScreen> {
       cateName: "grandsVajraj's",
       img: MyStrings.img3,
     ),
+    Food(
+      cateName: "Tandoori",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Venkateshwara Hotel",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Kababa & Grills",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Ruchi Mess",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Fruit Juices",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Brundavan Family Resturant",
+      img: MyStrings.img3,
+    ),
+
+    Food(
+      cateName: "Thaneer Tea House",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Good Morning tiffns",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Good Morning ",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Evening Snacks",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "waahh Mandi Resturant",
+      img: MyStrings.img3,
+    ),
+    Food(
+      cateName: "Ice Cream & Milkshakes",
+      img: MyStrings.img3,
+    ),
   ];
   List<Service> AskforService = <Service>[
     Service(
@@ -164,47 +203,32 @@ class _HomeScreenState extends State<HomeScreen> {
       cateName: "packersandMovers",
       img: MyStrings.img3,
     ),
-  ];
-  List<Picks> TopPicksforYou = <Picks>[
-    Picks(
-      cateName: "doorRepairs",
+    Service(
+      cateName: "packersandMovers",
       img: MyStrings.img3,
     ),
-    Picks(
-      cateName: "broadBeans",
+    Service(
+      cateName: "Contruction",
       img: MyStrings.img3,
     ),
-    Picks(
-      cateName: "mutton",
+    Service(
+      cateName: "Event Management",
       img: MyStrings.img3,
     ),
-  ];
-  List<Groceries> Groceriespage = <Groceries>[
-    Groceries(
-      cateName: "riceandRicaProduct",
+    Service(
+      cateName: "Interior Designing",
       img: MyStrings.img3,
     ),
-    Groceries(
-      cateName: "masalaandSpices",
+    Service(
+      cateName: "Carpentary",
       img: MyStrings.img3,
     ),
-    Groceries(
-      cateName: "flours",
-      img: MyStrings.img3,
-    ),
-    Groceries(
-      cateName: "bodySkinandHair",
-      img: MyStrings.img3,
-    ),
-    Groceries(
-      cateName: "choclatesandBiscuits",
-      img: MyStrings.img3,
-    ),
-    Groceries(
-      cateName: "healthDrinks",
+    Service(
+      cateName: "Beauty & Spa sri Nithya's",
       img: MyStrings.img3,
     ),
   ];
+
   List<Language> languageList = [
     Language(langName: 'తెలుగు', locale: const Locale('te', 'TE')),
     Language(langName: 'हिंदी', locale: const Locale('hi', 'HI')),
@@ -215,11 +239,50 @@ class _HomeScreenState extends State<HomeScreen> {
   final CarouselController _controller = CarouselController();
   late String selectedLanguage;
   final _advancedDrawerController = AdvancedDrawerController();
+  bool onpress = false;
+  bool foodPress = false;
+  bool askservice = false;
 
   @override
   void initState() {
     super.initState();
     selectedLanguage = getFlag('DE');
+  }
+
+  void showWidget() {
+    setState(() {
+      onpress = true;
+    });
+  }
+
+  void showWidget1() {
+    setState(() {
+      foodPress = true;
+    });
+  }
+
+  void showWidget2() {
+    setState(() {
+      askservice = true;
+    });
+  }
+
+  void hideWidget() {
+    setState(() {
+      onpress = false;
+    });
+  }
+
+  void hideWidget1() {
+    setState(() {
+      foodPress = false;
+    });
+  }
+
+  void hideWidget2() {
+    setState(() {
+      askservice = false;
+    });
   }
 
   @override
@@ -234,7 +297,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // openScale: 1.0,
       disabledGestures: false,
       childDecoration: const BoxDecoration(
-
           borderRadius: const BorderRadius.all(Radius.circular(16))),
       drawer: SafeArea(
         child: Container(
@@ -259,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black26,
                         shape: BoxShape.circle,
                       ),
-                      child:Image.asset(
+                      child: Image.asset(
                         'assets/logo.png',
                         height: 75,
                         width: 75,
@@ -276,13 +338,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: primaryColor,
                               size: 28.0,
                             ),
-                            SizedBox(width: 5,),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Container(
-                                width: MediaQuery.of(context).size.width/2.4,
-                                child: SmallText(text: 'Venkata Narasimha',size: 16,fontWeight: FontWeight.bold,)),
+                                width: MediaQuery.of(context).size.width / 2.4,
+                                child: SmallText(
+                                  text: 'Venkata Narasimha',
+                                  size: 16,
+                                  fontWeight: FontWeight.bold,
+                                )),
                           ],
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Row(
                           children: [
                             Icon(
@@ -290,13 +360,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: primaryColor,
                               size: 28.0,
                             ),
-                            SizedBox(width: 5,),
-                            SmallText(text: '9876543210',size: 16,),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SmallText(
+                              text: '9876543210',
+                              size: 16,
+                            ),
                           ],
                         ),
                       ],
                     ),
-
                   ],
                 ),
                 heightSpace,
@@ -310,80 +384,145 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 heightSpace,
                 heightSpace,
-
                 ListTile(
                   contentPadding: EdgeInsets.only(left: 30),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/orderhistoy.png'),),
-                  title: SmallText(text: MyStrings.orderHistory,fontWeight: FontWeight.w500,),
-                ),
-
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
-                  onTap: () {},
-                  leading:  Image(image: const AssetImage('assets/drawer/offer.png'),),
-                  title: SmallText(text: MyStrings.offers,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/orderhistoy.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.orderHistory,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/wallet.png'),),
-                  title: SmallText(text: MyStrings.wallet,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/offer.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.offers,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading:Image(image: const AssetImage('assets/drawer/refer.png'),),
-                  title: SmallText(text: MyStrings.refer,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/wallet.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.wallet,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/complain.png'),),
-                  title: SmallText(text: MyStrings.allCompliant,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/refer.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.refer,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/replacement.png'),),
-                  title: SmallText(text: MyStrings.replacementRequest,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/complain.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.allCompliant,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/rateus.png'),),
-                  title: SmallText(text: MyStrings.rateUs,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/replacement.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.replacementRequest,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/faq.png'),),
-                  title: SmallText(text: MyStrings.faq,fontWeight: FontWeight.w500,),
-                ),
-
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
-                  onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/about.png'),),
-                  title: SmallText(text: MyStrings.aboutUs,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/rateus.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.rateUs,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/terms.png'),),
-                  title: SmallText(text: MyStrings.termsOfUse,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/faq.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.faq,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading: Image(image: const AssetImage('assets/drawer/privacy.png'),),
-                  title: SmallText(text: MyStrings.privacyAndpolicy,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/about.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.aboutUs,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 30,top: 5),
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
                   onTap: () {},
-                  leading:Image(image: const AssetImage('assets/drawer/logout.png'),),
-                  title: SmallText(text: MyStrings.logOut,fontWeight: FontWeight.w500,),
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/terms.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.termsOfUse,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
+                  onTap: () {},
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/privacy.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.privacyAndpolicy,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.only(left: 30, top: 5),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushAndRemoveUntil(
+                      CupertinoPageRoute(
+                          builder: (context) => LoginPage()
+                      ),
+                          (_) => false,
+                    );
+                  },
+                  leading: Image(
+                    image: const AssetImage('assets/drawer/logout.png'),
+                  ),
+                  title: SmallText(
+                    text: MyStrings.logOut,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -391,60 +530,69 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Scaffold(
-        appBar:  AppBar(
-          backgroundColor:primaryColor,
-          title:  SmallText(text: "Logo",size: 25,),
-          leading: IconButton(
-            onPressed: _handleMenuButtonPressed,
-            icon: ValueListenableBuilder<AdvancedDrawerValue>(
-              valueListenable: _advancedDrawerController,
-              builder: (_, value, __) {
-                return AnimatedSwitcher(
-                  duration: Duration(milliseconds: 250),
-                  child: Icon(
-                    value.visible ? Icons.clear : Icons.menu,
-                    key: ValueKey<bool>(value.visible),
+        appBar: AppBar(
+            backgroundColor: primaryColor,
+            title: SmallText(
+              text: "Logo",
+              size: 25,
+            ),
+            leading: IconButton(
+              onPressed: _handleMenuButtonPressed,
+              icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                valueListenable: _advancedDrawerController,
+                builder: (_, value, __) {
+                  return AnimatedSwitcher(
+                    duration: Duration(milliseconds: 250),
+                    child: Icon(
+                      value.visible ? Icons.clear : Icons.menu,
+                      key: ValueKey<bool>(value.visible),
+                    ),
+                  );
+                },
+              ),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.notifications, size: 30),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () async {
+                    // launch("whatsapp://send?phone=+91 9502572662 &text=HELLO");
+                    const url =
+                        'https://api.whatsapp.com/send?phone=+919502572662&text=HELLO';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Image.asset(
+                    "assets/home/whatsapp.png",
+                    width: 45.0,
+                    height: 45.0,
                   ),
-                );
-              },
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: ()async {
-                // launch("whatsapp://send?phone=+91 9502572662 &text=HELLO");
-                  const url = 'https://api.whatsapp.com/send?phone=+919502572662&text=HELLO';
-                  if (await canLaunch(url)) {
-                  await launch(url);
-                  } else {
-                  throw 'Could not launch $url';
-                  }
-                },
-                child: Image.asset(
-                  "assets/home/whatsapp.png",
-                  width: 45.0,
-                  height: 45.0,
                 ),
               ),
-            ),
-            SizedBox(width: 5,),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: InkWell(
-                onTap: () {
-                  launch("tel:9502572662");
-                },
-                child: Icon(
-                  Icons.call,
-                  size: 30.0,
-                  color: Colors.white,
+              SizedBox(
+                width: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: InkWell(
+                  onTap: () {
+                    launch("tel:9502572662");
+                  },
+                  child: Icon(
+                    Icons.call,
+                    size: 30.0,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-
-          ],
+            ],
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(35.0),
               child: Column(
@@ -459,21 +607,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 20,
                         color: whiteColor,
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Row(
                         children: [
                           InkWell(
-                            onTap:  () {
-
-                            },
+                            onTap: () {},
                             child: SmallText(
-                            text: "Delivery Location",
+                              text: "Delivery Location",
                               color: whiteColor,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 3.0),
-                            child: Icon(Icons.keyboard_arrow_down_sharp, color: whiteColor,),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                              color: whiteColor,
+                            ),
                           )
                         ],
                       ),
@@ -484,40 +635,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-            )
-        ),
-
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   title: Row(
-        //     children: [
-        //       Icon(Icons.location_on),
-        //       SizedBox(
-        //         width: 5,
-        //       ),
-        //       SmallText(
-        //         text: 'chennai',
-        //         size: 20,
-        //       ),
-        //       Padding(
-        //         padding: const EdgeInsets.only(top: 5.0),
-        //         child: Icon(
-        //           Icons.keyboard_arrow_down_sharp,
-        //           size: 30,
-        //         ),
-        //       )
-        //     ],
-        //   ),
-        //   actions: [
-        //     Padding(
-        //       padding: const EdgeInsets.only(right: 12.0),
-        //       child: Icon(
-        //         Icons.search_rounded,
-        //         size: 30,
-        //       ),
-        //     )
-        //   ],
-        // ),
+            )),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -621,29 +739,50 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           SmallText(
                             text: 'dailyneeds'.tr(),
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
+                            size: 20,
                           ),
-                          Row(
-                            children: [
-                              SmallText(
-                                text: 'seeAll'.tr(),
-                                size: 14,
-                                color: primaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: circleColor,
+                          onpress == false
+                              ? InkWell(
+                                  onTap: () {
+                                    showWidget();
+                                    print("Expand");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("See More",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: seeColor,
+                                              fontWeight: FontWeight.bold)),
+                                      Icon(
+                                        Icons.arrow_drop_down_outlined,
+                                        size: 35,
+                                        color: primaryColor,
+                                      )
+                                    ],
                                   ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: primaryColor,
-                                  )),
-                            ],
-                          )
+                                )
+                              : InkWell(
+                                  onTap: () {
+                                    hideWidget();
+                                    print("Compress");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("See Less",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: seeColor,
+                                              fontWeight: FontWeight.bold)),
+                                      Icon(
+                                        Icons.arrow_drop_up_sharp,
+                                        size: 35,
+                                        color: primaryColor,
+                                      )
+                                    ],
+                                  ),
+                                ),
                         ],
                       ),
                       heightSpace,
@@ -655,7 +794,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                           ),
-                          itemCount: DailyNeedsList.length,
+                          itemCount:
+                              onpress == true ? DailyNeedsList.length : 6,
                           primary: false,
                           physics: NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
@@ -670,9 +810,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: containerColor,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
+                                        color: containerColor,
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                            color:
+                                                primaryColor.withOpacity(0.4))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
@@ -707,29 +849,50 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           SmallText(
                             text: 'foods&Beverages'.tr(),
-                            fontWeight: FontWeight.w500,
+                            size: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Row(
-                            children: [
-                              SmallText(
-                                text: 'seeAll'.tr(),
-                                size: 14,
-                                color: primaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: circleColor,
+                          foodPress == false
+                              ? InkWell(
+                                  onTap: () {
+                                    showWidget1();
+                                    print("Expand");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("See More",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: seeColor,
+                                              fontWeight: FontWeight.bold)),
+                                      Icon(
+                                        Icons.arrow_drop_down_outlined,
+                                        size: 35,
+                                        color: primaryColor,
+                                      )
+                                    ],
                                   ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: primaryColor,
-                                  )),
-                            ],
-                          )
+                                )
+                              : InkWell(
+                                  onTap: () {
+                                    hideWidget1();
+                                    print("Compress");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("See Less",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: seeColor,
+                                              fontWeight: FontWeight.bold)),
+                                      Icon(
+                                        Icons.arrow_drop_up_sharp,
+                                        size: 35,
+                                        color: primaryColor,
+                                      )
+                                    ],
+                                  ),
+                                ),
                         ],
                       ),
                       heightSpace,
@@ -741,7 +904,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                           ),
-                          itemCount: Foodlist.length,
+                          itemCount: foodPress == true ? Foodlist.length : 6,
                           primary: false,
                           physics: NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
@@ -753,11 +916,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
+
                                 ),
                                 child: Container(
                                     decoration: BoxDecoration(
                                       color: containerColor,
                                       borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color:
+                                            primaryColor.withOpacity(0.4))
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -791,29 +958,55 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           SmallText(
                             text: 'askforServices'.tr(),
-                            fontWeight: FontWeight.w500,
+                            size: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SmallText(
-                                text: 'seeAll'.tr(),
-                                size: 14,
-                                color: primaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: circleColor,
-                                  ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: primaryColor,
-                                  )),
+                              askservice == false
+                                  ? InkWell(
+                                      onTap: () {
+                                        showWidget2();
+                                        print("Expand");
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text("See More",
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: seeColor,
+                                                  fontWeight: FontWeight.bold)),
+                                          Icon(
+                                            Icons.arrow_drop_down_outlined,
+                                            size: 35,
+                                            color: primaryColor,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        hideWidget2();
+                                        print("Compress");
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text("See Less",
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: seeColor,
+                                                  fontWeight: FontWeight.bold)),
+                                          Icon(
+                                            Icons.arrow_drop_up_sharp,
+                                            size: 35,
+                                            color: primaryColor,
+                                          )
+                                        ],
+                                      ),
+                                    ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       heightSpace,
@@ -825,7 +1018,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                           ),
-                          itemCount: AskforService.length,
+                          itemCount:askservice == true? AskforService.length : 6,
                           primary: false,
                           physics: NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
@@ -842,6 +1035,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     decoration: BoxDecoration(
                                       color: containerColor,
                                       borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color:
+                                            primaryColor.withOpacity(0.4))
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -869,176 +1065,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           }),
-                      heightSpace,
-                      heightSpace,
-                      heightSpace,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SmallText(
-                            text: 'TopPicksForYou'.tr(),
-                            fontWeight: FontWeight.w500,
-                          ),
-                          Row(
-                            children: [
-                              SmallText(
-                                text: 'seeAll'.tr(),
-                                size: 14,
-                                color: primaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: circleColor,
-                                  ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: primaryColor,
-                                  )),
-                            ],
-                          )
-                        ],
-                      ),
-                      heightSpace,
-                      GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 2 / 2.2,
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                          ),
-                          itemCount: TopPicksforYou.length,
-                          primary: false,
-                          physics: NeverScrollableScrollPhysics(),
-                          // controller: ScrollController(keepScrollOffset: false),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      color: containerColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            TopPicksforYou[index].img,
-                                          ),
-                                          SmallText(
-                                            text: TopPicksforYou[index]
-                                                .cateName
-                                                .tr(),
-                                            color: primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            size: 14,
-                                            textAlign: TextAlign.center,
-                                            maxline: 1,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ),
-                            );
-                          }),
-                      heightSpace,
-                      heightSpace,
-                      heightSpace,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SmallText(
-                            text: 'groceries'.tr(),
-                            fontWeight: FontWeight.w500,
-                          ),
-                          Row(
-                            children: [
-                              SmallText(
-                                text: 'seeAll'.tr(),
-                                size: 14,
-                                color: primaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: circleColor,
-                                  ),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: primaryColor,
-                                  )),
-                            ],
-                          )
-                        ],
-                      ),
-                      heightSpace,
-                      GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 2 / 2.2,
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                          ),
-                          itemCount: Groceriespage.length,
-                          primary: false,
-                          physics: NeverScrollableScrollPhysics(),
-                          // controller: ScrollController(keepScrollOffset: false),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      color: containerColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            Groceriespage[index].img,
-                                          ),
-                                          SmallText(
-                                            text: Groceriespage[index]
-                                                .cateName
-                                                .tr(),
-                                            color: primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            size: 14,
-                                            textAlign: TextAlign.center,
-                                            maxline: 1,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ),
-                            );
-                          }),
                     ],
                   ),
                 ),
@@ -1047,7 +1073,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
     );
   }
 

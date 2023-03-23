@@ -1,27 +1,41 @@
 import 'dart:async';
+import 'package:askun_delivery_app/UI%20Screen/buttom_navigation.dart';
+import 'package:askun_delivery_app/UI%20Screen/homepage/homepage.dart';
+import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:flutter/material.dart';
 
-import '../login page/login.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key,}) : super(key: key);
+  const SplashScreen({Key? key,}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool isNewUser = true;
 
   startTime() async {
-    var _duration = Duration(seconds: 3);
-    return Timer(_duration, navigationPage);
+    var duration = const Duration(seconds: 3);
+    return Timer(duration, navigationPage);
   }
 
   void navigationPage() {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) =>  LoginPage()),
-            (Route<dynamic> route) => false);
+    if(isNewUser == true){
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) =>  const LoginPage()),
+              (Route<dynamic> route) => false);
 
+    }
+
+
+    else{
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) =>   BottomNavigation()),
+              (Route<dynamic> route) => false);
+
+    }
   }
 
   @override

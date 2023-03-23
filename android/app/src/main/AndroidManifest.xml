@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.askun_delivery_app">
-   <application
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <queries>
+        <package android:name="com.google.android.googlequicksearchbox"/>
+    </queries>
+
+    <application
         android:label="askun_delivery_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -12,6 +17,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
+
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues

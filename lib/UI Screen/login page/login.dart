@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../utilites/constant.dart';
 import '../../utilites/strings.dart';
@@ -16,6 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _mobileNumberController = TextEditingController();
+   String hardcodedMobileNumber = "6369739624";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,10 +99,6 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    // heightSpace,
-                    // heightSpace,
-                    // heightSpace,
-                    // heightSpace,
                     Container(
                       height: MediaQuery.of(context).size.height/5,
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,12 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                            heightSpace,
                           TextField(
                             cursorColor: primaryColor,
-                            // controller: controller,
+                             controller: _mobileNumberController,
                             keyboardType: TextInputType.number,
                             maxLength: 10,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                              //To remove first '0'
                               FilteringTextInputFormatter.deny(RegExp(r'^0+')),
                               FilteringTextInputFormatter.deny(RegExp(r'^1+')),
                               FilteringTextInputFormatter.deny(RegExp(r'^2+')),
@@ -141,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                                 size: 25,
                                 color: primaryColor,
                               ),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(top: 14.0),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(top: 14.0),
                                 child: Text(
                                   '+91',
                                   textAlign: TextAlign.center,
@@ -158,11 +156,22 @@ class _LoginPageState extends State<LoginPage> {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                               onTap: (){
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.rightToLeft,
-                                        child: const OTPScreen()));
+                                if ( _mobileNumberController.text == hardcodedMobileNumber) {
+                                  // SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  // var log = jsonEncode(loginResponse.toJson());
+                                  // print(loginResponse.value!.userInfo!.userName.toString());
+                                  // prefs.setString("username",loginResponse.value!.userInfo!.userName.toString());
+                                  // prefs.setString("empID",loginResponse.value!.userInfo!.empId.toString());
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: const OTPScreen()));
+                                } else {
+
+                                  Fluttertoast.showToast(msg:"Enter valid mobile number");
+                                }
+
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 3,
@@ -206,3 +215,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

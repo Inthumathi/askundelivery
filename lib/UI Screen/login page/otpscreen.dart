@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -19,7 +20,8 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   String currentText = "";
   final formKey = GlobalKey<FormState>();
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
+  String hardCode =  "1234";
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +133,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       animationDuration: const Duration(milliseconds: 300),
                       enableActiveFill: true,
                       // errorAnimationController: errorController,
-                      controller: textEditingController,
+                      controller: otpController,
                       keyboardType: TextInputType.number,
                       // boxShadows: const [
                       //   BoxShadow(
@@ -160,11 +162,16 @@ class _OTPScreenState extends State<OTPScreen> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: BottomNavigation()));
+                    if(otpController.text == hardCode){
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: BottomNavigation()));
+                    }else{
+                      Fluttertoast.showToast(msg:"Enter valid otp");
+
+                    }
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width / 3,
@@ -181,7 +188,10 @@ class _OTPScreenState extends State<OTPScreen> {
                         size: 16,
                       ),
                     ),
+
                   ),
+
+
                 ),
               ),
             ],

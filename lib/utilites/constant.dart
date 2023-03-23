@@ -15,3 +15,4 @@ Color containerColor =  Color(0xffffecbb);
 Color blueGrey = Colors.blueGrey;
 Color containerLightColor = Color(0xffffe6da);
 Color blackColor = Colors.black;
+Color seeColor = Color(0xff007474);
