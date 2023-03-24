@@ -7,7 +7,7 @@ import '../../utilites/constant.dart';
 import '../../utilites/strings.dart';
 import '../../widget/smalltext.dart';
 import '../register/register.dart';
-import 'otpscreen.dart';
+import 'optscreen/otpscreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -156,21 +156,26 @@ class _LoginPageState extends State<LoginPage> {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                               onTap: (){
-                                if ( _mobileNumberController.text == hardcodedMobileNumber) {
-                                  // SharedPreferences prefs = await SharedPreferences.getInstance();
-                                  // var log = jsonEncode(loginResponse.toJson());
-                                  // print(loginResponse.value!.userInfo!.userName.toString());
-                                  // prefs.setString("username",loginResponse.value!.userInfo!.userName.toString());
-                                  // prefs.setString("empID",loginResponse.value!.userInfo!.empId.toString());
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.rightToLeft,
-                                          child: const OTPScreen()));
-                                } else {
-
-                                  Fluttertoast.showToast(msg:"Enter valid mobile number");
-                                }
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: const OTPScreen()));
+                                // if ( _mobileNumberController.text == hardcodedMobileNumber) {
+                                //   // SharedPreferences prefs = await SharedPreferences.getInstance();
+                                //   // var log = jsonEncode(loginResponse.toJson());
+                                //   // print(loginResponse.value!.userInfo!.userName.toString());
+                                //   // prefs.setString("username",loginResponse.value!.userInfo!.userName.toString());
+                                //   // prefs.setString("empID",loginResponse.value!.userInfo!.empId.toString());
+                                //   Navigator.push(
+                                //       context,
+                                //       PageTransition(
+                                //           type: PageTransitionType.rightToLeft,
+                                //           child: const OTPScreen()));
+                                // } else {
+                                //
+                                //   Fluttertoast.showToast(msg:"Enter valid mobile number");
+                                // }
 
                               },
                               child: Container(

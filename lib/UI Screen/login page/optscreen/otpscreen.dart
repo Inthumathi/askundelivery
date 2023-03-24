@@ -1,14 +1,18 @@
 
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../utilites/constant.dart';
-import '../../utilites/strings.dart';
-import '../../widget/smalltext.dart';
-import '../buttom_navigation.dart';
+import '../../../utilites/constant.dart';
+import '../../../utilites/strings.dart';
+import '../../../widget/smalltext.dart';
+import '../../buttom_navigation.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen({Key? key}) : super(key: key);
@@ -22,10 +26,27 @@ class _OTPScreenState extends State<OTPScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController otpController = TextEditingController();
   String hardCode =  "1234";
+  int _counter = 60;
+  late Timer _timer;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SmallText(text:'Didn\'t Receive Anything?',size: 16,color: blueGrey,),
+            SizedBox(width: 5,),
+            InkWell(
+                onTap: (){
+                },
+                child: SmallText(text:'Resend Code',fontWeight: FontWeight.w500,color: primaryColor,)),
+          ],
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Color(0xfffafafa),
         elevation: 0,
@@ -46,7 +67,6 @@ class _OTPScreenState extends State<OTPScreen> {
           ),
         ),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -145,7 +165,6 @@ class _OTPScreenState extends State<OTPScreen> {
                       onCompleted: (v) {
                         debugPrint("Completed");
                       },
-
                       onChanged: (value) {
                         debugPrint(value);
                         setState(() {
@@ -158,46 +177,66 @@ class _OTPScreenState extends State<OTPScreen> {
                       },
                     )),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () {
-                    if(otpController.text == hardCode){
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: BottomNavigation()));
-                    }else{
-                      Fluttertoast.showToast(msg:"Enter valid otp");
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
 
-                    }
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                      child: SmallText(
-                        text: MyStrings.submit,
-                        color: whiteColor,
-                        fontWeight: FontWeight.bold,
-                        size: 16,
+                  TimerButton(
+                    label: "Try Again",
+                    timeOutInSeconds: 30,
+                    onPressed: () {},
+                    // buttonType: ButtonType.ElevatedButton,
+                    // color: Colors.green,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if(otpController.text == hardCode){
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: BottomNavigation()));
+                      }else{
+                        Fluttertoast.showToast(msg:"Enter valid otp");
+                      }
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Center(
+                        child: SmallText(
+                          text: MyStrings.submit,
+                          color: whiteColor,
+                          fontWeight: FontWeight.bold,
+                          size: 16,
+                        ),
                       ),
                     ),
 
                   ),
-
-
-                ),
+                ],
               ),
             ],
           ),
         ),
       ),
     );
+  }
+  void _startTimer() {
+    _counter = 60;
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          if (_counter > 0) {
+            _counter--;
+          } else {
+            _timer.cancel();
+          }
+        });
+      }
+    });
   }
 }

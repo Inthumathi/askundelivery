@@ -7,7 +7,7 @@ import '../../utilites/constant.dart';
 import '../../utilites/strings.dart';
 import '../../widget/smalltext.dart';
 import '../login page/login.dart';
-import '../login page/otpscreen.dart';
+import '../login page/optscreen/otpscreen.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
