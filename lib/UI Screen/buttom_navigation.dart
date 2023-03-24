@@ -41,8 +41,8 @@ class BottomNavigationState extends State<BottomNavigation> {
         child: DiamondBottomNavigation(
           itemIcons: const [
             Icons.home,
-            Icons.card_travel,
-            Icons.work_history_rounded,
+            Icons.shopping_cart_rounded,
+            Icons.event_note,
             Icons.person,
           ],
           centerIcon: Icons.search_rounded,
@@ -51,7 +51,7 @@ class BottomNavigationState extends State<BottomNavigation> {
           unselectedColor: primaryColor,
           selectedColor: blackColor,
           selectedLightColor: primaryColor,
-          height: 40,
+          height: 50,
         ),
       ),
       // bottomNavigationBar: BottomNavigationBar(

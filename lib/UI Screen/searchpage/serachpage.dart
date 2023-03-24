@@ -2,9 +2,13 @@
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart'as ssts;
+
 
 class serachPage extends StatefulWidget {
+
   const serachPage({Key? key}) : super(key: key);
 
   @override
@@ -12,9 +16,49 @@ class serachPage extends StatefulWidget {
 }
 
 class _serachPageState extends State<serachPage> {
+  String text = "Hai welcome here";
+
+  bool isListerning = false;
   final TextEditingController _controller = new TextEditingController();
   bool _wasEmpty = true;
+  var _speechToText = ssts.SpeechToText();
 
+  void listen() async{
+    if (!isListerning) {
+      bool availabe = await _speechToText.initialize(
+          onStatus: (status){
+            print(status);
+          },
+          onError:(errorNotification){
+              setState(() {
+                isListerning = false;
+              });
+            print(errorNotification);
+          },
+
+
+      );
+      if(availabe){
+        setState(() {
+          isListerning = true;
+        });
+        _speechToText.listen(
+            onResult: (result){
+              setState(() {
+                text = result.recognizedWords;
+                _controller.text = result.recognizedWords;
+              });
+            }
+        );
+      }
+    }
+    else{
+      setState(() {
+        isListerning = false;
+      });
+      _speechToText.stop();
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -67,7 +111,24 @@ class _serachPageState extends State<serachPage> {
                     ),
                     hintText: "Search your product here... ",
                     hintStyle: TextStyle(fontSize: 18,color: blueGrey,fontWeight: FontWeight.bold),
-                    suffixIcon:_wasEmpty == true? IconButton(onPressed: (){},icon: Icon(Icons.mic,size: 30,color: primaryColor,))
+                    suffixIcon:_wasEmpty == true? IconButton(onPressed: (){
+
+                    },icon: AvatarGlow(
+                      endRadius: 75,
+                      animate: isListerning,
+                      duration: Duration(milliseconds: 2000),
+                      glowColor: Colors.red,
+                      repeat: true,
+                      repeatPauseDuration: Duration(milliseconds: 100),
+                      showTwoGlows: true,
+                      child: InkWell(
+                        onTap: (){
+                          _showDialog();
+                          // listen();
+                        },
+                        child: isListerning ? Icon(Icons.mic,color: primaryColor,size: 30,) : Icon(Icons.mic_none,color: primaryColor,size: 30,),
+                      ),
+                    ),)
                    : IconButton(
                         onPressed:_controller.clear,
                         icon: Icon(Icons.close,size: 28,color: Colors.grey),),
@@ -77,6 +138,43 @@ class _serachPageState extends State<serachPage> {
               ),
             ),
           )),
+        // body: Text(text),
+    );
+  }
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                   SmallText(text: 'Say Something!',size: 20,color: blueGrey,fontWeight: FontWeight.w500),
+                  AvatarGlow(
+                    endRadius: 85,
+                    animate: isListerning,
+                    duration: Duration(milliseconds: 2000),
+                    glowColor: Colors.red,
+                    repeat: true,
+                    repeatPauseDuration: Duration(milliseconds: 100),
+                    showTwoGlows: true,
+                    child: FloatingActionButton(
+                      backgroundColor: primaryColor,
+                      onPressed: (){
+                        listen();
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: primaryColor.withOpacity(0.5),
+                          child: isListerning ? Icon(Icons.mic) : Icon(Icons.mic_none)),
+                    ),
+                  ),
+                  SmallText(text: 'English(United State)',size: 13,color: blueGrey,)
+                ],
+              )),
+
+        );
+      },
     );
   }
 
