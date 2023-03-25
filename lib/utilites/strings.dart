@@ -45,5 +45,11 @@ class MyStrings{
   // Search
   static const String searchProduct =  'Search Product';
 
+  // Address
+  static const String savedAddress =  'Saved Address';
+  static const String selectDeliverAddress =  'Select Delivery Address';
+  static const String edit =  'Edit';
+  static const String remove =  'Remove';
+
 
 }

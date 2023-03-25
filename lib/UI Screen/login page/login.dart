@@ -156,26 +156,26 @@ class _LoginPageState extends State<LoginPage> {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                               onTap: (){
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.rightToLeft,
-                                        child: const OTPScreen()));
-                                // if ( _mobileNumberController.text == hardcodedMobileNumber) {
-                                //   // SharedPreferences prefs = await SharedPreferences.getInstance();
-                                //   // var log = jsonEncode(loginResponse.toJson());
-                                //   // print(loginResponse.value!.userInfo!.userName.toString());
-                                //   // prefs.setString("username",loginResponse.value!.userInfo!.userName.toString());
-                                //   // prefs.setString("empID",loginResponse.value!.userInfo!.empId.toString());
-                                //   Navigator.push(
-                                //       context,
-                                //       PageTransition(
-                                //           type: PageTransitionType.rightToLeft,
-                                //           child: const OTPScreen()));
-                                // } else {
-                                //
-                                //   Fluttertoast.showToast(msg:"Enter valid mobile number");
-                                // }
+                                // Navigator.push(
+                                //     context,
+                                //     PageTransition(
+                                //         type: PageTransitionType.rightToLeft,
+                                //         child: const OTPScreen()));
+                                if ( _mobileNumberController.text == hardcodedMobileNumber) {
+                                  // SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  // var log = jsonEncode(loginResponse.toJson());
+                                  // print(loginResponse.value!.userInfo!.userName.toString());
+                                  // prefs.setString("username",loginResponse.value!.userInfo!.userName.toString());
+                                  // prefs.setString("empID",loginResponse.value!.userInfo!.empId.toString());
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: const OTPScreen()));
+                                } else {
+
+                                  Fluttertoast.showToast(msg:"Enter valid mobile number");
+                                }
 
                               },
                               child: Container(

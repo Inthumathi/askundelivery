@@ -6,11 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utilites/constant.dart';
 import '../../utilites/strings.dart';
 import '../../widget/smalltext.dart';
+import '../address/address.dart';
 
 // Banner Image
 final List<String> imgList = [
@@ -595,9 +597,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(35.0),
-              child: Column(
-                children: [
-                  Row(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child:  AddressScreen()));
+                },
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -612,12 +622,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Row(
                         children: [
-                          InkWell(
-                            onTap: () {},
-                            child: SmallText(
-                              text: "Delivery Location",
-                              color: whiteColor,
-                            ),
+                          SmallText(
+                            text: "Delivery Location",
+                            color: whiteColor,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 3.0),
@@ -630,10 +637,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 8,
-                  )
-                ],
+                ),
               ),
             )),
         body: SingleChildScrollView(

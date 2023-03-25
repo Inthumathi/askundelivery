@@ -29,11 +29,11 @@ class _RigisterPageState extends State<RegisterPage> {
             SizedBox(width: 5,),
             InkWell(
                 onTap: (){
-                  Navigator.push(
+                Navigator.push(
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child:  LoginPage()));
+                            child:  LoginPage()));
                 },
                 child: SmallText(text:'Login',fontWeight: FontWeight.w500,)),
           ],

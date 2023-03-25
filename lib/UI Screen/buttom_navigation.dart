@@ -62,7 +62,7 @@ class BottomNavigationState extends State<BottomNavigation> {
       //     BottomNavigationBarItem(icon: Icon(Icons.home_outlined), title: Text('Home',)),
       //     BottomNavigationBarItem(icon:  Icon(Icons.search), title: Text('Search')),
       //     BottomNavigationBarItem(icon: Icon(Icons.pause_circle_outline), title: Text('Courses')),
-      //     BottomNavigationBarItem(icon: Icon(Icons.assignment_turned_in_outlined),title: Text('Wishlist')),
+      //     BottomNavigationBarItem(icon: Icon(Icons.assignment_turned_in_outlined),title  : Text('Wishlist')),
       //     BottomNavigationBarItem(icon: Icon(Icons.rate_review_outlined), title: Text('Testimonial')),
       //     BottomNavigationBarItem(icon: Icon(Icons.account_circle),title: Text('Account')),
       //   ],
