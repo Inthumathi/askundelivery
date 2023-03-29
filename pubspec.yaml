@@ -51,6 +51,15 @@ dependencies:
   fluttertoast:
   avatar_glow:
   speech_to_text:
+  country_state_city_picker: ^1.2.8
+  dropdown_search: ^5.0.6
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  vertical_tabs_flutter:
+  badges: ^2.0.1
+
+
+
 
 
 
@@ -82,6 +91,7 @@ flutter:
     - assets/home/
     - assets/lang/
     - assets/drawer/
+    - assets/address/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

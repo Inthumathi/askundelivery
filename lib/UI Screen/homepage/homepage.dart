@@ -1,6 +1,11 @@
 import 'dart:core';
-
+import 'package:askun_delivery_app/UI%20Screen/address/address.dart';
+import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/groceirspage.dart';
+import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/meals.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
+import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/strings.dart';
+import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +14,6 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../utilites/constant.dart';
-import '../../utilites/strings.dart';
-import '../../widget/smalltext.dart';
-import '../address/address.dart';
 
 // Banner Image
 final List<String> imgList = [
@@ -301,233 +302,231 @@ class _HomeScreenState extends State<HomeScreen> {
       childDecoration: const BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(16))),
       drawer: SafeArea(
-        child: Container(
-          child: ListTileTheme(
-            textColor: Colors.black,
-            iconColor: Colors.black,
-            child: ListView(
-              // mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      // width: 100.0,
-                      // height: 100.0,
-                      margin: const EdgeInsets.only(
-                        top: 24.0,
-                        bottom: 20.0,
-                        left: 10,
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        color: Colors.black26,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/logo.png',
-                        height: 75,
-                        width: 75,
-                      ),
+        child: ListTileTheme(
+          textColor: Colors.black,
+          iconColor: Colors.black,
+          child: ListView(
+            // mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    // width: 100.0,
+                    // height: 100.0,
+                    margin: const EdgeInsets.only(
+                      top: 24.0,
+                      bottom: 20.0,
+                      left: 10,
                     ),
-                    widthSpace,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.person,
-                              color: primaryColor,
-                              size: 28.0,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width / 2.4,
-                                child: SmallText(
-                                  text: 'Venkata Narasimha',
-                                  size: 16,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.call,
-                              color: primaryColor,
-                              size: 28.0,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            SmallText(
-                              text: '9876543210',
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ],
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      color: Colors.black26,
+                      shape: BoxShape.circle,
                     ),
-                  ],
-                ),
-                heightSpace,
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 1,
-                    color: primaryColor,
+                    child: Image.asset(
+                      'assets/logo.png',
+                      height: 75,
+                      width: 75,
+                    ),
                   ),
-                ),
-                heightSpace,
-                heightSpace,
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/orderhistoy.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.orderHistory,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/offer.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.offers,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/wallet.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.wallet,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/refer.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.refer,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/complain.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.allCompliant,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/replacement.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.replacementRequest,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/rateus.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.rateUs,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/faq.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.faq,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/about.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.aboutUs,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/terms.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.termsOfUse,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {},
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/privacy.png'),
-                  ),
-                  title: SmallText(
-                    text: MyStrings.privacyAndpolicy,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 30, top: 5),
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushAndRemoveUntil(
-                      CupertinoPageRoute(
-                          builder: (context) => LoginPage()
+                  widthSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: primaryColor,
+                            size: 28.0,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 2.4,
+                              child: SmallText(
+                                text: 'Venkata Narasimha',
+                                size: 16,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
                       ),
-                          (_) => false,
-                    );
-                  },
-                  leading: Image(
-                    image: const AssetImage('assets/drawer/logout.png'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: primaryColor,
+                            size: 28.0,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          SmallText(
+                            text: '9876543210',
+                            size: 16,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  title: SmallText(
-                    text: MyStrings.logOut,
-                    fontWeight: FontWeight.w500,
-                  ),
+                ],
+              ),
+              heightSpace,
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 1,
+                  color: primaryColor,
                 ),
-              ],
-            ),
+              ),
+              heightSpace,
+              heightSpace,
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30),
+                onTap: () {},
+                leading: const Image(
+                  image: AssetImage('assets/drawer/orderhistoy.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.orderHistory,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: const Image(
+                  image: AssetImage('assets/drawer/offer.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.offers,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: const Image(
+                  image: AssetImage('assets/drawer/wallet.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.wallet,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/refer.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.refer,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/complain.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.allCompliant,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/replacement.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.replacementRequest,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/rateus.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.rateUs,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/faq.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.faq,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/about.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.aboutUs,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/terms.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.termsOfUse,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {},
+                leading: Image(
+                  image: const AssetImage('assets/drawer/privacy.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.privacyAndpolicy,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushAndRemoveUntil(
+                    CupertinoPageRoute(
+                        builder: (context) => LoginPage()
+                    ),
+                        (_) => false,
+                  );
+                },
+                leading: Image(
+                  image: const AssetImage('assets/drawer/logout.png'),
+                ),
+                title: SmallText(
+                  text: MyStrings.logOut,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -605,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child:  AddressScreen()));
+                          child:  const AddressScreen()));
                 },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -806,7 +805,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                DailyNeedsList[index].cateName == 'groceries'?
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: GroceriesPage())) :
+
+                                DailyNeedsList[index].cateName == 'meal'?
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: MealScreen())) :
+                                SizedBox();
+                              },
                               child: Card(
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(

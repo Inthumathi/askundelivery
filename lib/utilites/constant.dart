@@ -17,3 +17,10 @@ Color containerLightColor = Color(0xffffe6da);
 Color blackColor = Colors.black;
 Color seeColor = Color(0xff007474);
 Color addressTextColor = Color(0xff525E65);
+Color addressHeadingTextColor = Color(0xffa4a0a4);
+Color iconColor = Color(0xff908c91);
+Color addressBorderColor = Color(0xfff5f0f5);
+
+
+Color containercolor = Color(0xFFbce8f1);
+Color lightgrey = Color(0xff7f7e80);

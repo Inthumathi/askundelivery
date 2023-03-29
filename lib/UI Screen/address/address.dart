@@ -1,8 +1,10 @@
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'addaddress.dart';
 
 class Address {
   final String name;
@@ -84,224 +86,235 @@ class _AddressScreenState extends State<AddressScreen> {
           size: 18,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(
-                      color: blueGrey,
-                      width: 1,
-                    )),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child:  AddAddress()));
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(
+                          color: blueGrey,
+                          width: 1,
+                        )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.add, color: primaryColor),
-                          SizedBox(
-                            width: 15,
+                          Row(
+                            children: [
+                              Icon(Icons.add, color: primaryColor),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              SmallText(
+                                text: 'Add Address',
+                                size: 16,
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ],
                           ),
-                          SmallText(
-                            text: 'Add Address',
-                            size: 16,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          Icon(Icons.arrow_forward_ios,
+                              size: 18, color: primaryColor)
                         ],
                       ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 18, color: primaryColor)
-                    ],
-                  ),
-                )),
-          ),
-          heightSpace,
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0),
-            child: SmallText(
-              text: MyStrings.savedAddress,
-              color: primaryColor,
-              size: 18,
-              fontWeight: FontWeight.w600,
+                    )),
+              ),
             ),
-          ),
-          ListView.builder(
-            itemCount: addressList.length,
-            physics: BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          activeAddress = index;
-                        });
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 5.0, bottom: 5, left: 10, right: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SmallText(
-                                      text: addressList[index].name,
-                                      color: Color(0xff181818),
-                                      fontWeight: FontWeight.bold,
-                                      size: 18),
-                                  Container(
-                                    width: 20.0,
-                                    height: 20.0,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                          width: 1.5,
-                                          color: (activeAddress == index)
-                                              ? primaryColor
-                                              : Colors.blueGrey),
-                                    ),
-                                    child: Container(
-                                      width: 10.0,
-                                      height: 10.0,
+            heightSpace,
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: SmallText(
+                text: MyStrings.savedAddress,
+                color: primaryColor,
+                size: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            ListView.builder(
+              itemCount: addressList.length,
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            activeAddress = index;
+                          });
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5.0, bottom: 5, left: 10, right: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SmallText(
+                                        text: addressList[index].name,
+                                        color: Color(0xff181818),
+                                        fontWeight: FontWeight.bold,
+                                        size: 18),
+                                    Container(
+                                      width: 20.0,
+                                      height: 20.0,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        color: (activeAddress == index)
-                                            ? primaryColor
-                                            : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        border: Border.all(
+                                            width: 1.5,
+                                            color: (activeAddress == index)
+                                                ? primaryColor
+                                                : Colors.blueGrey),
+                                      ),
+                                      child: Container(
+                                        width: 10.0,
+                                        height: 10.0,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          color: (activeAddress == index)
+                                              ? primaryColor
+                                              : Colors.transparent,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              SmallText(
-                                  text: addressList[index].doorNo,
-                                  color: addressTextColor),
-                              SmallText(
-                                  text: addressList[index].streetName,
-                                  color: addressTextColor),
-                              SmallText(
-                                  text: addressList[index].pinCode,
-                                  color: addressTextColor),
-                              SmallText(
-                                  text: addressList[index].landMark,
-                                  color: addressTextColor),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.call,
-                                          size: 16, color: addressTextColor),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SmallText(
-                                          text: addressList[index].number,
-                                          color: addressTextColor),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      // _expandedIndex == index ? showWidget():hideWidget();
-                                      setState(() {
-                                        _expandedIndex = _expandedIndex == index
-                                            ? -1
-                                            : index;
-                                      });
-                                    },
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: containerLightColor),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Icon(
-                                            Icons.more_horiz,
-                                            color: primaryColor,
-                                          ),
-                                        )),
-                                  ),
-                                ],
-                              ),
-                              heightSpace,
-                              heightSpace,
-                              _expandedIndex == index ?
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                SmallText(
+                                    text: addressList[index].doorNo,
+                                    color: addressTextColor),
+                                SmallText(
+                                    text: addressList[index].streetName,
+                                    color: addressTextColor),
+                                SmallText(
+                                    text: addressList[index].pinCode,
+                                    color: addressTextColor),
+                                SmallText(
+                                    text: addressList[index].landMark,
+                                    color: addressTextColor),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.edit_outlined,
-                                            color: primaryColor, size: 22),
+                                        Icon(Icons.call,
+                                            size: 16, color: addressTextColor),
                                         SizedBox(
                                           width: 5,
                                         ),
                                         SmallText(
-                                          text: MyStrings.edit,
-                                          fontWeight: FontWeight.w500,
-                                          size: 17,
-                                          color: primaryColor,
-                                        )
+                                            text: addressList[index].number,
+                                            color: addressTextColor),
                                       ],
                                     ),
-                                    widthSpace,
-                                    Row(
-                                      children: [
-                                        Icon(Icons.delete,
-                                            color: primaryColor, size: 22),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        SmallText(
-                                          text: MyStrings.remove,
-                                          fontWeight: FontWeight.w500,
-                                          size: 17,
-                                          color: primaryColor,
-                                        )
-                                      ],
+                                    InkWell(
+                                      onTap: () {
+                                        // _expandedIndex == index ? showWidget():hideWidget();
+                                        setState(() {
+                                          _expandedIndex = _expandedIndex == index
+                                              ? -1
+                                              : index;
+                                        });
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: containerLightColor),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Icon(
+                                              Icons.more_horiz,
+                                              color: primaryColor,
+                                            ),
+                                          )),
                                     ),
                                   ],
-                                ):SizedBox(),
-                            ],
-                          )),
+                                ),
+                                heightSpace,
+                                heightSpace,
+                                _expandedIndex == index ?
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.edit_outlined,
+                                              color: primaryColor, size: 22),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          SmallText(
+                                            text: MyStrings.edit,
+                                            fontWeight: FontWeight.w500,
+                                            size: 17,
+                                            color: primaryColor,
+                                          )
+                                        ],
+                                      ),
+                                      widthSpace,
+                                      Row(
+                                        children: [
+                                          Icon(Icons.delete,
+                                              color: primaryColor, size: 22),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          SmallText(
+                                            text: MyStrings.remove,
+                                            fontWeight: FontWeight.w500,
+                                            size: 17,
+                                            color: primaryColor,
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ):SizedBox(),
+                              ],
+                            )),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 1,
-                    width: MediaQuery.of(context).size.width,
-                    color: blueGrey.withOpacity(0.3),
-                  )
-                ],
-              );
-            },
-          ),
-        ],
+                    Container(
+                      height: 1,
+                      width: MediaQuery.of(context).size.width,
+                      color: blueGrey.withOpacity(0.3),
+                    )
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

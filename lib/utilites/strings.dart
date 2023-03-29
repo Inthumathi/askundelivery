@@ -50,6 +50,15 @@ class MyStrings{
   static const String selectDeliverAddress =  'Select Delivery Address';
   static const String edit =  'Edit';
   static const String remove =  'Remove';
-
+  static const String currentLocation =  'Current Location';
+  static const String name =  'Name';
+  static const String addressInfo =  'Address Info';
+  static const String flatNo =  'Flat no, House no, Apartment';
+  static const String street =  'Street, Area, Village';
+  static const String landmark =  'Landmark';
+  static const String pincode =  'Pincode';
+  static const String state =  'State';
+  static const String country =  'County';
+  static const String townVillage =  'Town or City';
 
 }
