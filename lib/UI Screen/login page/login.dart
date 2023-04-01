@@ -1,11 +1,11 @@
 
+import 'package:askun_delivery_app/UI%20Screen/register/register.dart';
+import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/strings.dart';
+import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../utilites/constant.dart';
-import '../../utilites/strings.dart';
-import '../../widget/smalltext.dart';
-import '../register/register.dart';
 import 'optscreen/otpscreen.dart';
 
 class LoginPage extends StatefulWidget {

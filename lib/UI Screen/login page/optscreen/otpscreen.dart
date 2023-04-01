@@ -48,7 +48,7 @@ class _OTPScreenState extends State<OTPScreen> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Color(0xfffafafa),
+        backgroundColor:scafoldBodyColor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),

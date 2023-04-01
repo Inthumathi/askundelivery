@@ -42,7 +42,7 @@ class BottomNavigationState extends State<BottomNavigation> {
           itemIcons: const [
             Icons.home,
             Icons.shopping_cart_rounded,
-            Icons.event_note,
+            Icons.favorite,
             Icons.person,
           ],
           centerIcon: Icons.search_rounded,

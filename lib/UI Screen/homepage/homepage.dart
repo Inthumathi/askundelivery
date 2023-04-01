@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:askun_delivery_app/UI%20Screen/address/address.dart';
 import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/groceirspage.dart';
-import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/meals.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
@@ -85,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "meal",
+      cateName: "meat",
       img: MyStrings.img3,
     ),
     DailyNeeds(
@@ -791,7 +790,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       heightSpace,
                       GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 2 / 2.2,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10,
@@ -802,6 +801,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           primary: false,
                           physics: NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
+
+
+
+
+
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
@@ -813,12 +817,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         type: PageTransitionType.rightToLeft,
                                         child: GroceriesPage())) :
 
-                                DailyNeedsList[index].cateName == 'meal'?
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.rightToLeft,
-                                        child: MealScreen())) :
                                 SizedBox();
                               },
                               child: Card(
@@ -929,7 +927,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+
+                              },
                               child: Card(
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(

@@ -5,6 +5,14 @@ import 'package:flutter/material.dart';
 var heightSpace = const SizedBox(height: 10,);
 var widthSpace = const SizedBox(width: 10,);
 
+int timeDuration = 30;
+
+
+String timeoutMsg = 'Timeout';
+String success = 'success';
+String TRUE = 'true';
+String FALSE = 'false';
+String TOKEN = 'token';
 
 
 // Color
@@ -24,3 +32,4 @@ Color addressBorderColor = Color(0xfff5f0f5);
 
 Color containercolor = Color(0xFFbce8f1);
 Color lightgrey = Color(0xff7f7e80);
+Color scafoldBodyColor = Color(0xfffafafa);

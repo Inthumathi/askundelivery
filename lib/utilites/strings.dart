@@ -18,6 +18,7 @@ class MyStrings{
   // register
   static const String register = 'Register';
   static const String username = 'User Name';
+  static const String registerSuccessMsg = 'You had successfully Register';
 
   // Homepage
   static const String category = 'Categories';
@@ -60,5 +61,8 @@ class MyStrings{
   static const String state =  'State';
   static const String country =  'County';
   static const String townVillage =  'Town or City';
+
+  // Sub category
+  static const String add =  'Add';
 
 }

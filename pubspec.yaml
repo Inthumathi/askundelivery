@@ -57,6 +57,9 @@ dependencies:
   geocoding: ^2.1.0
   vertical_tabs_flutter:
   badges: ^2.0.1
+  http: ^0.13.5
+  shared_preferences: ^2.1.0
+
 
 
 
