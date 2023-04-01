@@ -1,18 +1,13 @@
 
-import 'dart:async';
-import 'dart:developer';
-
+import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
+import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/strings.dart';
+import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-import '../../../utilites/constant.dart';
-import '../../../utilites/strings.dart';
-import '../../../widget/smalltext.dart';
-import '../../buttom_navigation.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen({Key? key}) : super(key: key);
@@ -26,8 +21,8 @@ class _OTPScreenState extends State<OTPScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController otpController = TextEditingController();
   String hardCode =  "1234";
-  int _counter = 60;
-  late Timer _timer;
+  // int _counter = 60;
+  // late Timer _timer;
 
 
   @override
@@ -39,7 +34,7 @@ class _OTPScreenState extends State<OTPScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SmallText(text:'Didn\'t Receive Anything?',size: 16,color: blueGrey,),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             InkWell(
                 onTap: (){
                 },
@@ -57,7 +52,7 @@ class _OTPScreenState extends State<OTPScreen> {
               Navigator.pop(context);
             },
             child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     shape: BoxShape.circle, color: Color(0xffffd6c2)),
                 child: Icon(
                   Icons.keyboard_arrow_left,
@@ -109,9 +104,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
                     child: PinCodeTextField (
                       appContext: context,
-                      inputFormatters: [
-                        // WhitelistingTextInputFormatter.digitsOnly
-                      ],
+
                       cursorHeight: 20,
                       // pastedTextStyle: TextStyle(
                       //   // color: Colors.green.shade600,
@@ -138,16 +131,16 @@ class _OTPScreenState extends State<OTPScreen> {
                         fieldWidth: 60,
                         // borderRadius: BorderRadius.circular(5),
                         // errorBorderColor:  Color(0xffC4C5C4),
-                        selectedColor: Color(0xffd8d8d8),
-                        inactiveColor: Color(0xffC4C5C4),
+                        selectedColor: const Color(0xffd8d8d8),
+                        inactiveColor: const Color(0xffC4C5C4),
                         borderWidth: 1,
-                        activeColor: Color(0xffffdecd),
+                        activeColor: const Color(0xffffdecd),
                         disabledColor: whiteColor,
-                        selectedFillColor: Color(0xffffd8c5),
-                        inactiveFillColor: Color(0xffd8d8d8),
+                        selectedFillColor: const Color(0xffffd8c5),
+                        inactiveFillColor: const Color(0xffd8d8d8),
                         // fieldHeight: 50,
                         // fieldWidth: 40,
-                        activeFillColor: Color(0xffd8d8d8),
+                        activeFillColor: const Color(0xffd8d8d8),
                       ),
                       cursorColor: Colors.black.withOpacity(0.8),
                       animationDuration: const Duration(milliseconds: 300),
@@ -194,7 +187,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.rightToLeft,
-                                child: BottomNavigation()));
+                                child: const LoginPage()));
                       }else{
                         Fluttertoast.showToast(msg:"Enter valid otp");
                       }
@@ -225,18 +218,18 @@ class _OTPScreenState extends State<OTPScreen> {
       ),
     );
   }
-  void _startTimer() {
-    _counter = 60;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (mounted) {
-        setState(() {
-          if (_counter > 0) {
-            _counter--;
-          } else {
-            _timer.cancel();
-          }
-        });
-      }
-    });
-  }
+  // void _startTimer() {
+  //   _counter = 60;
+  //   _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     if (mounted) {
+  //       setState(() {
+  //         if (_counter > 0) {
+  //           _counter--;
+  //         } else {
+  //           _timer.cancel();
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 }

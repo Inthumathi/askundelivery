@@ -1,18 +1,15 @@
-import 'dart:convert';
 
 import 'package:askun_delivery_app/Models/register/register.dart';
+import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
+import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
 import 'package:askun_delivery_app/services/service.dart';
+import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/strings.dart';
+import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../utilites/constant.dart';
-import '../../utilites/strings.dart';
-import '../../widget/smalltext.dart';
-import '../login page/login.dart';
-import '../login page/optscreen/otpscreen.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -201,8 +198,8 @@ class _RigisterPageState extends State<RegisterPage> {
                                   size: 25,
                                   color: primaryColor,
                                 ),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(top: 14.0),
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(top: 14.0),
                                   child: Text(
                                     '+91',
                                     textAlign: TextAlign.center,
@@ -229,7 +226,8 @@ class _RigisterPageState extends State<RegisterPage> {
                                 const SnackBar(
                                     content: Text('Please fill in all fields')),
                               );
-                            } else if (_mobileNumberController.text.length < 10) {
+                            } else if (_mobileNumberController.text.length <
+                                10) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                     content: Text(
@@ -280,7 +278,27 @@ class _RigisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
+  //
+  // _register(String username, String mobilenumber) async {
+  //   // LoaderScreen();
+  //   // networkStatus().then((isReachable) {
+  //   // if (isReachable!) {
+  //   // showLoaderDialog(context);
+  //   Webservice()
+  //       .callRegisterService(username: username, mobilenumber: mobilenumber)
+  //       .then((onResponse) async {
+  //     if (onResponse.status == SUCCESS) {
+  //       Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
+  //       await Future.delayed(const Duration(seconds: 2));
+  //       Navigator.push(
+  //           context,
+  //           PageTransition(
+  //               type: PageTransitionType.rightToLeft, child: const OTPScreen()));
+  //     } else if (onResponse.status == ERROR) {
+  //       Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
+  //     }
+  //   });
+  // }
   _register(String username, String mobilenumber) async {
     // LoaderScreen();
     // networkStatus().then((isReachable) {
@@ -295,10 +313,17 @@ class _RigisterPageState extends State<RegisterPage> {
         Navigator.push(
             context,
             PageTransition(
-                type: PageTransitionType.rightToLeft, child: LoginPage()));
+                type: PageTransitionType.rightToLeft, child: const OTPScreen()));
       } else if (onResponse.status == ERROR) {
         Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
       }
+    }).catchError((error) {
+      if (error.toString().contains('User already exists')) {
+        Fluttertoast.showToast(msg: 'User already exists');
+      } else {
+        Fluttertoast.showToast(msg: 'Failed to register');
+      }
     });
   }
+
 }

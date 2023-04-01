@@ -55,9 +55,7 @@ class Webservice {
       }
     }
     else if (response.statusCode == 500) {
-      // If the server returns a 400 Bad Request response, it means the user already exists.
-      // You can handle this case by throwing a custom exception, like this:
-      throw UserAlreadyExistsException('User already exists');
+      throw Exception('User already exists');
     }
     else {
       // If the server did not return a 200 OK response,
@@ -65,9 +63,4 @@ class Webservice {
       throw Exception('Failed to load album');
     }
   }
-}
-class UserAlreadyExistsException implements Exception {
-  String cause;
-  UserAlreadyExistsException(this.cause);
-  String toString() => cause;
 }
