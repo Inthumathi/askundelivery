@@ -4,6 +4,7 @@ import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/loader.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +44,7 @@ class _RigisterPageState extends State<RegisterPage> {
             ),
             InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: LoginPage()));
+                  Navigator.of(context).pop();
                 },
                 child: SmallText(
                   text: 'Login',
@@ -278,32 +275,13 @@ class _RigisterPageState extends State<RegisterPage> {
       ),
     );
   }
-  //
-  // _register(String username, String mobilenumber) async {
-  //   // LoaderScreen();
-  //   // networkStatus().then((isReachable) {
-  //   // if (isReachable!) {
-  //   // showLoaderDialog(context);
-  //   Webservice()
-  //       .callRegisterService(username: username, mobilenumber: mobilenumber)
-  //       .then((onResponse) async {
-  //     if (onResponse.status == SUCCESS) {
-  //       Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
-  //       await Future.delayed(const Duration(seconds: 2));
-  //       Navigator.push(
-  //           context,
-  //           PageTransition(
-  //               type: PageTransitionType.rightToLeft, child: const OTPScreen()));
-  //     } else if (onResponse.status == ERROR) {
-  //       Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
-  //     }
-  //   });
-  // }
+
+
   _register(String username, String mobilenumber) async {
     // LoaderScreen();
     // networkStatus().then((isReachable) {
     // if (isReachable!) {
-    // showLoaderDialog(context);
+    // startLoader();
     Webservice()
         .callRegisterService(username: username, mobilenumber: mobilenumber)
         .then((onResponse) async {
@@ -314,16 +292,30 @@ class _RigisterPageState extends State<RegisterPage> {
             context,
             PageTransition(
                 type: PageTransitionType.rightToLeft, child: const OTPScreen()));
-      } else if (onResponse.status == ERROR) {
-        Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
       }
-    }).catchError((error) {
+      else if (onResponse.status == ERROR) {
+        Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
+
+      }
+    }).catchError((error) async {
       if (error.toString().contains('User already exists')) {
         Fluttertoast.showToast(msg: 'User already exists');
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.pop(context);
+
       } else {
         Fluttertoast.showToast(msg: 'Failed to register');
       }
     });
+  }
+
+
+  startLoader() {
+    LoadingDialog.showLoaderDialog(context, 'Please Wait..');
+  }
+
+  stopLoader() {
+    Navigator.of(context).pop();
   }
 
 }

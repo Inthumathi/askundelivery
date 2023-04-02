@@ -42,11 +42,6 @@ dependencies:
   diamond_bottom_bar:
   easy_localization:
   flutter_advanced_drawer:
-  flex_color_scheme:
-  flutter_staggered_grid_view:
-  flex_color_picker:
-  hive:
-  path_provider:
   double_back_to_close_app:
   fluttertoast:
   avatar_glow:
@@ -55,10 +50,10 @@ dependencies:
   dropdown_search: ^5.0.6
   geolocator: ^9.0.2
   geocoding: ^2.1.0
-  vertical_tabs_flutter:
   badges: ^2.0.1
   http: ^0.13.5
   shared_preferences: ^2.1.0
+  flutter_svg:
 
 
 

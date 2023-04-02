@@ -14,6 +14,7 @@ String ERROR = 'error';
 String TRUE = 'true';
 String FALSE = 'false';
 String TOKEN = 'token';
+String loginSuccessMsg = 'OTP has been sent to your phone number';
 
 
 // Color

@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'package:askun_delivery_app/Models/login/login.dart';
 import 'package:askun_delivery_app/Models/register/register.dart';
+import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
 import 'package:askun_delivery_app/utilites/api_constant.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -63,4 +67,86 @@ class Webservice {
       throw Exception('Failed to load album');
     }
   }
+
+
+  Future<LoginResponse> callLoginService({required String mobilenumber}) async {
+    var url = Uri.parse(ApiConstants.loginURL);
+    print("URL: $url");
+    Map data = {
+      'phone_number': mobilenumber,
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+    print("Request body: $body");
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+    final response = await http.post(url, headers: headers, body: body).timeout(
+      Duration(seconds: timeDuration),
+      onTimeout: () {
+        // Time has run out, do what you wanted to do.
+        return http.Response('Error', 400);
+      },
+    );
+    print("Response status code: ${response.statusCode}");
+    print("Response body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("loginResponse", response.body.toString());
+      Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse['status'] == 'success') {
+        return LoginResponse.fromJson(jsonResponse);
+      } else {
+        throw Exception(jsonResponse['message']);
+      }
+    }
+    else if(response.statusCode == 404){
+      throw Exception('User does not exist');
+    }
+    else {
+      throw Exception('Failed to load album');
+    }
+  }
+
+  //
+  // Future<LoginResponse> callLoginService(
+  //     {required String mobilenumber}) async {
+  //   var url = Uri.parse(ApiConstants.loginURL);
+  //   print(url);
+  //   Map data = {
+  //     'phone_number': mobilenumber,
+  //   };
+  //   //encode Map to JSON
+  //   var body = json.encode(data);
+  //   print(body);
+  //   Map<String, String> headers = {
+  //     'Content-type': 'application/json',
+  //     'Accept': 'application/json',
+  //   };
+  //   final response = await http.post(url, headers: headers, body: body).timeout(
+  //     Duration(seconds: timeDuration),
+  //     onTimeout: () {
+  //       // Time has run out, do what you wanted to do.
+  //       return http.Response('Error', 400);
+  //     },
+  //   );
+  //   print(response.statusCode);
+  //   print(response.body);
+  //
+  //   if (response.statusCode == 200) {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.setString("loginResponse",response.body.toString());
+  //     Map<String, dynamic> jsonResponse = json.decode(response.body);
+  //     if (jsonResponse['status'] == 'success') {
+  //       return LoginResponse.fromJson(jsonResponse);
+  //     } else {
+  //       throw Exception(jsonResponse['message']);
+  //     }
+  //   }
+  //   else {
+  //     throw Exception('Failed to load album');
+  //   }
+  // }
 }
