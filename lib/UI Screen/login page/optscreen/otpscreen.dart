@@ -1,4 +1,5 @@
 
+import 'package:askun_delivery_app/UI%20Screen/buttom_navigation.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
@@ -187,7 +188,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.rightToLeft,
-                                child: const LoginPage()));
+                                child:  BottomNavigation()));
                       }else{
                         Fluttertoast.showToast(msg:"Enter valid otp");
                       }

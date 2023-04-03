@@ -1,4 +1,5 @@
 import 'package:askun_delivery_app/UI%20Screen/homepage/homepage.dart';
+import 'package:askun_delivery_app/UI%20Screen/productdiscription/productdescription.dart';
 import 'package:askun_delivery_app/UI%20Screen/searchpage/serachpage.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
@@ -677,10 +678,19 @@ class _GroceriesPageState extends State<GroceriesPage> {
                                               //   ),
                                             ),
                                           ),
-                                          Center(
-                                            child: Image.asset(
-                                              categories[i].image,
-                                              width: 100,
+                                          InkWell(
+                                            onTap: (){
+                                              Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                      type: PageTransitionType.rightToLeft,
+                                                      child:  ProductDescription()));
+                                            },
+                                            child: Center(
+                                              child: Image.asset(
+                                                categories[i].image,
+                                                width: 100,
+                                              ),
                                             ),
                                           ),
                                           heightSpace,
