@@ -247,10 +247,10 @@ class _LoginPageState extends State<LoginPage> {
       // if ([onResponse.status == SUCCESS) {
       //   Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
       //   await Future.delayed(const Duration(seconds: 2));
-        Navigator.push(
-            context,
-            PageTransition(
-                type: PageTransitionType.rightToLeft, child: const OTPScreen()));
+      //   Navigator.push(
+      //       context,
+      //       PageTransition(
+      //           type: PageTransitionType.rightToLeft, child: const OTPScreen()));
       // }
       // else if (onResponse.status == ERROR) {
       //   Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
           context,
           PageTransition(
-              type: PageTransitionType.rightToLeft, child: const OTPScreen()));
+              type: PageTransitionType.rightToLeft, child:  OTPScreen(mobilenumber: _mobileNumberController.text,)));
       }
       else if (error.toString().contains('User does not exist')) {
         Fluttertoast.showToast(msg: 'User does not exist');
