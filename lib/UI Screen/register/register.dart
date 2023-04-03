@@ -291,7 +291,7 @@ class _RigisterPageState extends State<RegisterPage> {
         Navigator.push(
             context,
             PageTransition(
-                type: PageTransitionType.rightToLeft, child: const OTPScreen()));
+                type: PageTransitionType.rightToLeft, child: OTPScreen(mobilenumber: _mobileNumberController.text,)));
       }
       else if (onResponse.status == ERROR) {
         Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);

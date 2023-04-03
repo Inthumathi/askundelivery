@@ -1,6 +1,7 @@
 
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
+import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
@@ -10,7 +11,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPScreen extends StatefulWidget {
-  const OTPScreen({Key? key}) : super(key: key);
+
+String mobilenumber;
+
+   OTPScreen({required this.mobilenumber, Key? key}) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -182,15 +186,16 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      if(otpController.text == hardCode){
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: const LoginPage()));
-                      }else{
-                        Fluttertoast.showToast(msg:"Enter valid otp");
-                      }
+                      // if(otpController.text == hardCode){
+                      //   Navigator.push(
+                      //       context,
+                      //       PageTransition(
+                      //           type: PageTransitionType.rightToLeft,
+                      //           child: const LoginPage()));
+                      // }else{
+                      //   Fluttertoast.showToast(msg:"Enter valid otp");
+                      // }
+                      _verifyOTP(widget.mobilenumber,otpController.text);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 3,
@@ -232,4 +237,30 @@ class _OTPScreenState extends State<OTPScreen> {
   //     }
   //   });
   // }
+
+  _verifyOTP(String mobilenumber, String verifyOTP) async {
+    Webservice()
+        .callVerifyOtpService(mobilenumber, verifyOTP)
+        .then((onResponse) async {
+      // if (onResponse.refresh == SUCCESS) {
+      //   Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
+      //   await Future.delayed(const Duration(seconds: 2));
+      //   // Navigator.push(
+      //   //     context,
+      //   //     PageTransition(
+      //   //         type: PageTransitionType.rightToLeft, child: OTPScreen()));
+      // } else if (onResponse.access == ERROR) {
+      //   Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
+      // }
+    }).catchError((error) async {
+      if (error.toString().contains('User already exists')) {
+        Fluttertoast.showToast(msg: 'User already exists');
+        await Future.delayed(const Duration(seconds: 2));
+        Navigator.pop(context);
+      } else {
+        Fluttertoast.showToast(msg: 'Failed to register');
+      }
+    });
+  }
+
 }
