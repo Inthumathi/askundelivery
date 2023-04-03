@@ -65,5 +65,6 @@ class MyStrings{
 
   // Sub category
   static const String add =  'Add';
+  static const String qty =  'Qty';
 
 }
