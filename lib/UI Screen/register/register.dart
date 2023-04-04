@@ -214,9 +214,7 @@ class _RigisterPageState extends State<RegisterPage> {
                         alignment: Alignment.centerRight,
                         child: InkWell(
                           onTap: () {
-                            // _register(_usernameController.text,
-                            //     _mobileNumberController.text);
-                            // print('You clicked here');
+
                             if (_usernameController.text.isEmpty ||
                                 _mobileNumberController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(

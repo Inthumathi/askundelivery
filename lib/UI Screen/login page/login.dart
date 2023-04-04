@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'optscreen/otpscreen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               size: 16,
               color: blueGrey,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             InkWell(
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: RegisterPage()));
+                          child: const RegisterPage()));
                 },
                 child: SmallText(
                   text: 'Register',
@@ -103,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
                                       color: primaryColor)),
-                              TextSpan(text: MyStrings.mobile),
+                              const TextSpan(text: MyStrings.mobile),
                             ],
                           ),
                         ),
@@ -143,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                               isDense: true,
                               counterText: "",
                               contentPadding:
-                                  EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                  const EdgeInsets.fromLTRB(10, 12, 10, 12),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 borderSide:
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                    const BorderRadius.all(Radius.circular(5.0)),
                                 borderSide:
                                     BorderSide(width: 1, color: blueGrey),
                               ),
@@ -187,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                 } else if (_mobileNumberController.text.length <
                                     10) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                         content: Text(
                                             'Please enter a valid mobile number')),
                                   );
@@ -242,31 +243,26 @@ class _LoginPageState extends State<LoginPage> {
     // if (isReachable!) {
     // startLoader();
     Webservice()
-        .callLoginService(mobilenumber: mobilenumber)
+        .callLoginService(phoneNumber: mobilenumber)
         .then((onResponse) async {
-      // if ([onResponse.status == SUCCESS) {
-      //   Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
-      //   await Future.delayed(const Duration(seconds: 2));
-      //   Navigator.push(
-      //       context,
-      //       PageTransition(
-      //           type: PageTransitionType.rightToLeft, child: const OTPScreen()));
-      // }
-      // else if (onResponse.status == ERROR) {
-      //   Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
-      //
-      // }]
+     if(onResponse!.message=="OTP has been sent to your phone number"){
+       print(onResponse);
+       print("SUCCESS");
+       SharedPreferences prefs = await SharedPreferences.getInstance();
+       prefs.setString("loginResponse", mobilenumber);
+       Fluttertoast.showToast(msg: "Otp send to your register Mobile number");
+         await Future.delayed(const Duration(seconds: 2));
+         Navigator.push(
+             context,
+             PageTransition(
+                 type: PageTransitionType.rightToLeft, child:  OTPScreen(mobilenumber:mobilenumber ,)));
+       }
+     else{
+       Fluttertoast.showToast(msg: "Failed to login");
 
+    }
 
     }).catchError((error) async {
-      // if (error.toString().contains('User already exists')) {
-      //   Fluttertoast.showToast(msg: 'User already exists');
-      //   await Future.delayed(const Duration(seconds: 2));
-      //   Navigator.pop(context);
-      //
-      // } else {
-      //   Fluttertoast.showToast(msg: 'Failed to register');
-      // }
       if (error.toString().contains('OTP has been sent to your phone number')) {
         Fluttertoast.showToast(msg: 'OTP has been sent to your phone number');
         await Future.delayed(const Duration(seconds: 2));

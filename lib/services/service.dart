@@ -70,19 +70,61 @@ class Webservice {
   }
 
 
-  Future<LoginResponse> callLoginService({required String mobilenumber}) async {
+  // Future<LoginResponse> callLoginService({required String mobilenumber}) async {
+  //   var url = Uri.parse(ApiConstants.loginURL);
+  //   print("URL: $url");
+  //   Map data = {
+  //     'phone_number': mobilenumber,
+  //   };
+  //   //encode Map to JSON
+  //   var body = json.encode(data);
+  //   print("Request body: $body");
+  //   Map<String, String> headers = {
+  //     'Content-type': 'application/json',
+  //     'Accept': 'application/json',
+  //   };
+  //   final response = await http.post(url, headers: headers, body: body).timeout(
+  //     Duration(seconds: timeDuration),
+  //     onTimeout: () {
+  //       // Time has run out, do what you wanted to do.
+  //       return http.Response('Error', 400);
+  //     },
+  //   );
+  //   print("Response status code: ${response.statusCode}");
+  //   print("Response body: ${response.body}");
+  //
+  //   if (response.statusCode == 200) {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.setString("loginResponse", response.body.toString());
+  //     Map<String, dynamic> jsonResponse = json.decode(response.body);
+  //     if (jsonResponse['status'] == 'success') {
+  //       return LoginResponse.fromJson(jsonResponse);
+  //     } else {
+  //       throw Exception(jsonResponse['message']);
+  //     }
+  //   }
+  //   else if(response.statusCode == 404){
+  //     throw Exception('User does not exist');
+  //   }
+  //   else {
+  //     throw Exception('Failed to load album');
+  //   }
+  // }
+
+  Future<LoginResponse?> callLoginService({required String phoneNumber}) async {
     var url = Uri.parse(ApiConstants.loginURL);
     print("URL: $url");
-    Map data = {
-      'phone_number': mobilenumber,
-    };
-    //encode Map to JSON
-    var body = json.encode(data);
-    print("Request body: $body");
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
+    Map<String, dynamic> data = {
+      'phone_number': phoneNumber,
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+    print("Request body: $body");
+
     final response = await http.post(url, headers: headers, body: body).timeout(
       Duration(seconds: timeDuration),
       onTimeout: () {
@@ -92,22 +134,46 @@ class Webservice {
     );
     print("Response status code: ${response.statusCode}");
     print("Response body: ${response.body}");
+    //
+    // if (response.statusCode == 200) {
+    //   Map<String, dynamic> jsonResponse = json.decode(response.body);
+    //   print(jsonResponse);
+    //   if (jsonResponse['status'] == 'OTP has been sent to your phone number') {
+    //     final message = jsonResponse['message'];
+    //     if (message == 'OTP has been sent to your phone number') {
+    //       // OTP has been sent, return null to indicate success without a response
+    //       return  LoginResponse.fromJson(jsonResponse);
+    //     } else {
+    //       final loginResponse = LoginResponse.fromJson(jsonResponse);
+    //       SharedPreferences prefs = await SharedPreferences.getInstance();
+    //       prefs.setString("loginResponse", json.encode(loginResponse.toJson()));
+    //       return loginResponse;
+    //     }
+    //   } else {
+    //     throw Exception(jsonResponse['message']);
+    //   }
+    // }
 
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("loginResponse", response.body.toString());
+      prefs.setString("loginResponse",response.body.toString());
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-      if (jsonResponse['status'] == 'success') {
+      if (jsonResponse['message'] == 'OTP has been sent to your phone number') {
         return LoginResponse.fromJson(jsonResponse);
       } else {
         throw Exception(jsonResponse['message']);
       }
     }
-    else if(response.statusCode == 404){
+
+    else if (response.statusCode == 404) {
       throw Exception('User does not exist');
+    }else if (response.statusCode == 500) {
+      throw Exception('OTP already sent recently, please wait for some time before trying again');
     }
     else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to login');
     }
   }
 
