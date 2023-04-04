@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+
 class DailyNeeds {
   final String cateName;
   final String img;
@@ -40,27 +40,27 @@ class _ProductDescriptionState extends State<ProductDescription> {
 
   List<DailyNeeds> DailyNeedsList = <DailyNeeds>[
     DailyNeeds(
-      cateName: "groceries",
+      cateName: "Groceries",
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "meat",
+      cateName: "Meat",
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "vegetableandFruits",
+      cateName: "Vegetableand Fruits",
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "dairyProducts",
+      cateName: "Dairy Products",
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "prasadatu",
+      cateName: "Prasadatu",
       img: MyStrings.img3,
     ),
     DailyNeeds(
-      cateName: "homeFoods",
+      cateName: "Home Foods",
       img: MyStrings.img3,
     ),
   ];
@@ -188,9 +188,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         Container(
                           child: Center(child: SmallText(text: "Add to Cart",color: Colors.white,)),
                           width: 120,
-                          height: 35,
+                          height: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
+                            borderRadius: BorderRadius.circular(5),
                             color: primaryColor,
                             border: Border.all(width: 1.0, color: primaryColor),
                           ),
@@ -215,7 +215,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
               width: MediaQuery.of(context).size.width,
               height: 100,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 5),
                 child:SmallText(text:
                   ' Dummy Product description in details',)
               ),
@@ -252,12 +252,6 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             mainAxisAlignment:
                             MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                DailyNeedsList[index].img,
-                                width: 150,
-                                // height: 140,
-                              ),
-
                               SmallText(
                                 text: DailyNeedsList[index]
                                     .cateName,
@@ -267,9 +261,15 @@ class _ProductDescriptionState extends State<ProductDescription> {
                                 textAlign: TextAlign.center,
                                 maxline: 1,
                               ),
-                              SizedBox(height: 5),
-                              SmallText(text: MyStrings.qty),
-                              SizedBox(height: 5),
+                              SizedBox(height: 15),
+                              Image.asset(
+                                DailyNeedsList[index].img,
+                                width: 150,
+                                // height: 140,
+                              ),
+                              SizedBox(height: 15),
+                              SmallText(text: MyStrings.qty,size: 17),
+                              SizedBox(height: 10),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   SmallText(text: '\u{20B9} 300',size: 18,color: blueGrey,fontWeight: FontWeight.w600,),
@@ -295,7 +295,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 );
               }),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
           ],
         ),
       ),

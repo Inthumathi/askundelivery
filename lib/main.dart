@@ -1,5 +1,4 @@
-import 'package:askun_delivery_app/UI%20Screen/Splash%20Screen/splashscreen.dart';
-import 'package:askun_delivery_app/UI%20Screen/productdiscription/productdescription.dart';
+import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'utilites/constant.dart';
@@ -56,7 +55,7 @@ class Local extends StatelessWidget {
                 )
             )
         ),
-        home:  ProductDescription()
+        home:  LoginPage()
     );
   }
 }
