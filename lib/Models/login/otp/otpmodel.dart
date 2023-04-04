@@ -1,10 +1,10 @@
-class OtpResponse {
+class VerifyOtp {
   String? refresh;
   String? access;
 
-  OtpResponse({this.refresh, this.access});
+  VerifyOtp({this.refresh, this.access});
 
-  OtpResponse.fromJson(Map<String, dynamic> json) {
+  VerifyOtp.fromJson(Map<String, dynamic> json) {
     refresh = json['refresh'];
     access = json['access'];
   }

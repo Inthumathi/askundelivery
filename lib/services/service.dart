@@ -178,12 +178,12 @@ class Webservice {
   }
 
 
-  Future<OtpResponse> callVerifyOtpService(String phoneNumber, String otpCode) async {
+  Future<VerifyOtp> callVerifyOtpService(String mobilenumber, String otpCode) async {
     var url = Uri.parse(ApiConstants.loginURL);
     print("URL: $url");
     Map data = {
-      'phone_number': phoneNumber,
-      'otp':otpCode,
+      'phone_number': mobilenumber,
+      'otp':otpCode
     };
     //encode Map to JSON
     var body = json.encode(data);
@@ -203,7 +203,7 @@ class Webservice {
     print("Response body: ${response.body}");
 
     if (response.statusCode == 200) {
-      return OtpResponse.fromJson(json.decode(response.body));
+      return VerifyOtp.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to verify OTP');
     }

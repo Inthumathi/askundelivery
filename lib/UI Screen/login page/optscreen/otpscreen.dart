@@ -242,24 +242,9 @@ class _OTPScreenState extends State<OTPScreen> {
     Webservice()
         .callVerifyOtpService(mobilenumber, verifyOTP)
         .then((onResponse) async {
-      // if (onResponse.refresh == SUCCESS) {
-      //   Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
-      //   await Future.delayed(const Duration(seconds: 2));
-      //   // Navigator.push(
-      //   //     context,
-      //   //     PageTransition(
-      //   //         type: PageTransitionType.rightToLeft, child: OTPScreen()));
-      // } else if (onResponse.access == ERROR) {
-      //   Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
-      // }
+
     }).catchError((error) async {
-      if (error.toString().contains('User already exists')) {
-        Fluttertoast.showToast(msg: 'User already exists');
-        await Future.delayed(const Duration(seconds: 2));
-        Navigator.pop(context);
-      } else {
-        Fluttertoast.showToast(msg: 'Failed to register');
-      }
+
     });
   }
 
