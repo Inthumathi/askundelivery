@@ -240,7 +240,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   _verifyOTP(String mobilenumber, String verifyOTP) async {
     Webservice()
-        .callVerifyOtpService(mobilenumber, verifyOTP)
+        .callVerifyOtpService( phoneNumber: mobilenumber,otpCode: verifyOTP)
         .then((onResponse) async {
 
     }).catchError((error) async {
