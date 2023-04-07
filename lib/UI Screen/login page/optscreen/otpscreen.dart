@@ -1,20 +1,15 @@
-
-import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPScreen extends StatefulWidget {
 
-String mobilenumber;
 
-   OTPScreen({required this.mobilenumber, Key? key}) : super(key: key);
+   OTPScreen({Key? key}) : super(key: key);
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -195,7 +190,8 @@ class _OTPScreenState extends State<OTPScreen> {
                       // }else{
                       //   Fluttertoast.showToast(msg:"Enter valid otp");
                       // }
-                      _verifyOTP(widget.mobilenumber,otpController.text);
+
+                      _verifyOTP(otpController.text);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 3,
@@ -238,9 +234,9 @@ class _OTPScreenState extends State<OTPScreen> {
   //   });
   // }
 
-  _verifyOTP(String mobilenumber, String verifyOTP) async {
+  _verifyOTP( String verifyOTP) async {
     Webservice()
-        .callVerifyOtpService( phoneNumber: mobilenumber,otpCode: verifyOTP)
+        .callVerifyOtpService( otpCode: verifyOTP)
         .then((onResponse) async {
 
     }).catchError((error) async {

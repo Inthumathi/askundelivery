@@ -67,4 +67,10 @@ class MyStrings{
   static const String add =  'Add';
   static const String qty =  'Qty';
 
+
+  //my cart
+  static const String myCart =  'My Cart';
+  static const String rice =  'Rice';
+
 }
+

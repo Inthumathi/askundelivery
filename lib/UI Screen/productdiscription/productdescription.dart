@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:askun_delivery_app/UI%20Screen/mycart/mycart.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 class DailyNeeds {
@@ -30,10 +32,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
       'https://picsum.photos/id/1023/300/200'
   ];
   String dropdownValue = '100kg';
-  int _counter = 0;
   int activeButton= 0;
-  int _cartBadgeAmount = 0;
-  bool?_showCartBadge;
   Color color = Colors.red;
   final ScrollController _scrollController = ScrollController();
   Timer? _timer;
@@ -185,17 +184,26 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             ),
                           ],
                         ),
-                        Container(
-                          child: Center(child: SmallText(text: "Add to Cart",color: Colors.white,)),
-                          width: 120,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: primaryColor,
-                            border: Border.all(width: 1.0, color: primaryColor),
-                          ),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const MyCart()));
+                          },
+                          child: Container(
+                            child: Center(child: SmallText(text: "Add to Cart",color: Colors.white,)),
+                            width: 120,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: primaryColor,
+                              border: Border.all(width: 1.0, color: primaryColor),
+                            ),
 
-                          ),
+                            ),
+                        ),
                       ],
                     ),
                   ],

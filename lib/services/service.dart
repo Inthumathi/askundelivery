@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'package:askun_delivery_app/Models/login/login.dart';
-import 'package:askun_delivery_app/Models/login/otp/otpmodel.dart';
 import 'package:askun_delivery_app/Models/register/register.dart';
-import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
 import 'package:askun_delivery_app/utilites/api_constant.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -209,7 +205,7 @@ class Webservice {
   //   }
   // }
 
-  Future<LoginResponse?> callVerifyOtpService({required String phoneNumber,required String otpCode }) async {
+  Future<LoginResponse?> callVerifyOtpService({required String otpCode }) async {
     var url = Uri.parse(ApiConstants.loginURL);
     print("URL: $url");
     Map<String, String> headers = {
@@ -217,7 +213,7 @@ class Webservice {
       'Accept': 'application/json',
     };
     Map<String, dynamic> data = {
-      'phone_number': phoneNumber,
+
       'otp':otpCode
     };
     //encode Map to JSON

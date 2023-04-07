@@ -255,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
          Navigator.push(
              context,
              PageTransition(
-                 type: PageTransitionType.rightToLeft, child:  OTPScreen(mobilenumber:mobilenumber ,)));
+                 type: PageTransitionType.rightToLeft, child:  OTPScreen()));
        }
      else{
        Fluttertoast.showToast(msg: "Failed to login");
@@ -263,15 +263,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     }).catchError((error) async {
-      if (error.toString().contains('OTP has been sent to your phone number')) {
-        Fluttertoast.showToast(msg: 'OTP has been sent to your phone number');
-        await Future.delayed(const Duration(seconds: 2));
-      Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.rightToLeft, child:  OTPScreen(mobilenumber: _mobileNumberController.text,)));
-      }
-      else if (error.toString().contains('User does not exist')) {
+     if (error.toString().contains('User does not exist')) {
         Fluttertoast.showToast(msg: 'User does not exist');
         await Future.delayed(const Duration(seconds: 2));
         Navigator.push(

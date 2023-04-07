@@ -1,6 +1,5 @@
 
 import 'package:askun_delivery_app/Models/register/register.dart';
-import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
@@ -289,7 +288,7 @@ class _RigisterPageState extends State<RegisterPage> {
         Navigator.push(
             context,
             PageTransition(
-                type: PageTransitionType.rightToLeft, child: OTPScreen(mobilenumber: _mobileNumberController.text,)));
+                type: PageTransitionType.rightToLeft, child: OTPScreen()));
       }
       else if (onResponse.status == ERROR) {
         Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
