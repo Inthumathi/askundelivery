@@ -27,34 +27,34 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SmallText(
-              text: 'Don\'t have an Account?',
-              size: 16,
-              color: blueGrey,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const RegisterPage()));
-                },
-                child: SmallText(
-                  text: 'Register',
-                  fontWeight: FontWeight.w500,
-                )),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.all(12.0),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       SmallText(
+      //         text: 'Don\'t have an Account?',
+      //         size: 16,
+      //         color: blueGrey,
+      //       ),
+      //       const SizedBox(
+      //         width: 5,
+      //       ),
+      //       InkWell(
+      //           onTap: () {
+      //             Navigator.push(
+      //                 context,
+      //                 PageTransition(
+      //                     type: PageTransitionType.rightToLeft,
+      //                     child: const RegisterPage()));
+      //           },
+      //           child: SmallText(
+      //             text: 'Register',
+      //             fontWeight: FontWeight.w500,
+      //           )),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -245,12 +245,18 @@ class _LoginPageState extends State<LoginPage> {
     Webservice()
         .callLoginService(phoneNumber: mobilenumber)
         .then((onResponse) async {
-     if(onResponse!.message=="OTP has been sent to your phone number"){
+     if(onResponse!.message=="OTP has been sent to your phone number"||onResponse.message=="New User registered, OTP sent to your Mobile Number" ){
        print(onResponse);
        print("SUCCESS");
        SharedPreferences prefs = await SharedPreferences.getInstance();
        prefs.setString("loginResponse", mobilenumber);
-       Fluttertoast.showToast(msg: "Otp send to your register Mobile number");
+       if(onResponse.message == "OTP has been sent to your phone number"){
+         Fluttertoast.showToast(msg: "Otp send to your register Mobile number");
+       }
+       else {
+         Fluttertoast.showToast(msg: "Otp send to your register Mobile number");
+       }
+
          await Future.delayed(const Duration(seconds: 2));
          Navigator.push(
              context,
@@ -263,18 +269,18 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     }).catchError((error) async {
-     if (error.toString().contains('User does not exist')) {
-        Fluttertoast.showToast(msg: 'User does not exist');
-        await Future.delayed(const Duration(seconds: 2));
-        Navigator.push(
-            context,
-            PageTransition(
-                type: PageTransitionType.rightToLeft, child: const RegisterPage()));
-      }
-      else {
-        Fluttertoast.showToast(msg: 'Failed to login');
-      }
-      print(error);
+     // if (error.toString().contains('User does not exist')) {
+     //    Fluttertoast.showToast(msg: 'User does not exist');
+     //    await Future.delayed(const Duration(seconds: 2));
+     //    Navigator.push(
+     //        context,
+     //        PageTransition(
+     //            type: PageTransitionType.rightToLeft, child: const RegisterPage()));
+     //  }
+     //  else {
+     //    Fluttertoast.showToast(msg: 'Failed to login');
+     //  }
+     //  print(error);
     });
   }
 

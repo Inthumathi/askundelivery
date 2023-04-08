@@ -209,59 +209,49 @@ class _RigisterPageState extends State<RegisterPage> {
                           ],
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: () {
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //
+                      //       if (_usernameController.text.isEmpty ||
+                      //           _mobileNumberController.text.isEmpty) {
+                      //         ScaffoldMessenger.of(context).showSnackBar(
+                      //           const SnackBar(
+                      //               content: Text('Please fill in all fields')),
+                      //         );
+                      //       } else if (_mobileNumberController.text.length <
+                      //           10) {
+                      //         ScaffoldMessenger.of(context).showSnackBar(
+                      //           SnackBar(
+                      //               content: Text(
+                      //                   'Please enter a valid mobile number')),
+                      //         );
+                      //       } else {
+                      //         _register(_usernameController.text,
+                      //             _mobileNumberController.text);
+                      //         print('You clicked here');
+                      //       }
+                      //     },
+                      //     child: Container(
+                      //       width: MediaQuery.of(context).size.width / 3,
+                      //       height: 50,
+                      //       decoration: BoxDecoration(
+                      //         color: primaryColor,
+                      //         borderRadius: BorderRadius.circular(5),
+                      //       ),
+                      //       child: Center(
+                      //         child: SmallText(
+                      //           text: MyStrings.register,
+                      //           color: whiteColor,
+                      //           fontWeight: FontWeight.w500,
+                      //           size: 16,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
 
-                            if (_usernameController.text.isEmpty ||
-                                _mobileNumberController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Please fill in all fields')),
-                              );
-                            } else if (_mobileNumberController.text.length <
-                                10) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Please enter a valid mobile number')),
-                              );
-                            } else {
-                              _register(_usernameController.text,
-                                  _mobileNumberController.text);
-                              print('You clicked here');
-                            }
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                              child: SmallText(
-                                text: MyStrings.register,
-                                color: whiteColor,
-                                fontWeight: FontWeight.w500,
-                                size: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // heightSpace,
-                      // heightSpace,
-                      // heightSpace,
-                      // heightSpace,
-                      // Center(
-                      //     child: SmallText(
-                      //   text: MyStrings.dummyMessage,
-                      //   color: blueGrey,
-                      //   fontStyle: FontStyle.italic,
-                      //   fontWeight: FontWeight.w400,
-                      // ))
                     ],
                   ),
                 ),
@@ -274,37 +264,37 @@ class _RigisterPageState extends State<RegisterPage> {
   }
 
 
-  _register(String username, String mobilenumber) async {
-    // LoaderScreen();
-    // networkStatus().then((isReachable) {
-    // if (isReachable!) {
-    // startLoader();
-    Webservice()
-        .callRegisterService(username: username, mobilenumber: mobilenumber)
-        .then((onResponse) async {
-      if (onResponse.status == SUCCESS) {
-        Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
-        await Future.delayed(const Duration(seconds: 2));
-        Navigator.push(
-            context,
-            PageTransition(
-                type: PageTransitionType.rightToLeft, child: OTPScreen()));
-      }
-      else if (onResponse.status == ERROR) {
-        Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
-
-      }
-    }).catchError((error) async {
-      if (error.toString().contains('User already exists')) {
-        Fluttertoast.showToast(msg: 'User already exists');
-        await Future.delayed(const Duration(seconds: 2));
-        Navigator.pop(context);
-
-      } else {
-        Fluttertoast.showToast(msg: 'Failed to register');
-      }
-    });
-  }
+  // _register(String username, String mobilenumber) async {
+  //   // LoaderScreen();
+  //   // networkStatus().then((isReachable) {
+  //   // if (isReachable!) {
+  //   // startLoader();
+  //   Webservice()
+  //       .callRegisterService(username: username, mobilenumber: mobilenumber)
+  //       .then((onResponse) async {
+  //     if (onResponse.status == SUCCESS) {
+  //       Fluttertoast.showToast(msg: MyStrings.registerSuccessMsg);
+  //       await Future.delayed(const Duration(seconds: 2));
+  //       Navigator.push(
+  //           context,
+  //           PageTransition(
+  //               type: PageTransitionType.rightToLeft, child: OTPScreen()));
+  //     }
+  //     else if (onResponse.status == ERROR) {
+  //       Fluttertoast.showToast(msg: MyStrings.registerFailureMsg);
+  //
+  //     }
+  //   }).catchError((error) async {
+  //     if (error.toString().contains('User already exists')) {
+  //       Fluttertoast.showToast(msg: 'User already exists');
+  //       await Future.delayed(const Duration(seconds: 2));
+  //       Navigator.pop(context);
+  //
+  //     } else {
+  //       Fluttertoast.showToast(msg: 'Failed to register');
+  //     }
+  //   });
+  // }
 
 
   startLoader() {

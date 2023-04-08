@@ -238,7 +238,7 @@ class _OTPScreenState extends State<OTPScreen> {
     Webservice()
         .callVerifyOtpService( otpCode: verifyOTP)
         .then((onResponse) async {
-
+          print(onResponse!.refresh);
     }).catchError((error) async {
 
     });
