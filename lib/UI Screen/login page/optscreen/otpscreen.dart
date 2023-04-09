@@ -1,7 +1,4 @@
-import 'dart:convert';
 
-import 'package:askun_delivery_app/Models/login/otp/otpmodel.dart';
-import 'package:askun_delivery_app/UI%20Screen/buttom_navigation.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
@@ -10,7 +7,7 @@ import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class OTPScreen extends StatefulWidget {
 
@@ -247,6 +244,8 @@ class _OTPScreenState extends State<OTPScreen> {
     Webservice()
         .callVerifyOtpService(otpCode: verifyOTP)
         .then((onResponse) async {
+          print(onResponse!.refresh);
+          print(onResponse.access);
       // if (onResponse. == 200) {
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //   prefs.setString("otpVerifyResponse", onResponse!.body.toString());
