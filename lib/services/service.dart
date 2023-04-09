@@ -4,6 +4,7 @@ import 'package:askun_delivery_app/Models/login/otp/otpmodel.dart';
 import 'package:askun_delivery_app/Models/register/register.dart';
 import 'package:askun_delivery_app/utilites/api_constant.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,8 @@ class Resource<T> {
 }
 
 class Webservice {
+
+  static final storage = FlutterSecureStorage();
 
 // Register Service
 
@@ -75,6 +78,7 @@ class Webservice {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'Cookie': 'sessionid=5emr3k7t06zwzz9bbmks8zqjm25gfm24',
     };
     Map<String, dynamic> data = {
       'phone_number': phoneNumber,
@@ -113,8 +117,11 @@ class Webservice {
     // }
 
     if (response.statusCode == 200) {
+     // Save phone number locally
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("loginResponse",response.body.toString());
+      await prefs.setString('loginResponse', phoneNumber);
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString("loginResponse",response.body.toString());
       // If the server did return a 200 OK response,
       // then parse the JSON.
       Map<String, dynamic> jsonResponse = json.decode(response.body);
@@ -147,6 +154,7 @@ class Webservice {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
+      'Cookie': 'sessionid=5emr3k7t06zwzz9bbmks8zqjm25gfm24',
     };
     Map<String, dynamic> data = {
       "otp":otpCode
@@ -165,46 +173,24 @@ class Webservice {
     );
     print("Response status code: ${response.statusCode}");
     print("Response body: ${response.body}");
-    //
-    // if (response.statusCode == 200) {
-    //   Map<String, dynamic> jsonResponse = json.decode(response.body);
-    //   print(jsonResponse);
-    //   if (jsonResponse['status'] == 'OTP has been sent to your phone number') {
-    //     final message = jsonResponse['message'];
-    //     if (message == 'OTP has been sent to your phone number') {
-    //       // OTP has been sent, return null to indicate success without a response
-    //       return  LoginResponse.fromJson(jsonResponse);
-    //     } else {
-    //       final loginResponse = LoginResponse.fromJson(jsonResponse);
-    //       SharedPreferences prefs = await SharedPreferences.getInstance();
-    //       prefs.setString("loginResponse", json.encode(loginResponse.toJson()));
-    //       return loginResponse;
-    //     }
-    //   } else {
-    //     throw Exception(jsonResponse['message']);
-    //   }
-    // }
 
     if (response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("otpVerifyResponse",response.body.toString());
+      await storage.delete(key: 'phone_number');
+      await storage.delete(key: 'otp_sent_at');
       // If the server did return a 200 OK response,
       // then parse the JSON.
       Map<String, dynamic> jsonResponse = json.decode(response.body);
-    //  if (jsonResponse['message'] == 'OTP has been sent to your phone number') {
-        return VerifyOtp.fromJson(jsonResponse);
-     // } else {
-        throw Exception(jsonResponse['message']);
-     // }
+         return  VerifyOtp.fromJson(jsonResponse);
     }
 
-    else if (response.statusCode == 404) {
-      throw Exception('User does not exist');
-    }else if (response.statusCode == 500) {
-      throw Exception('OTP already sent recently, please wait for some time before trying again');
+    else if (response.statusCode == 400) {
+      throw Exception("Invalid OTP");
     }
     else {
       throw Exception('Failed to login');
     }
   }
+
 }
