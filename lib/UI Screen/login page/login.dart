@@ -1,11 +1,11 @@
 import 'package:askun_delivery_app/Models/login/login.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/loader.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -241,16 +241,9 @@ class _LoginPageState extends State<LoginPage> {
     // LoaderScreen();
     // networkStatus().then((isReachable) {
     // if (isReachable!) {
-    //  startLoader();
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return  SpinKitFadingCircle(
-          color: primaryColor,
-        );
-      },
-    );
+
+    startLoader();
+
     Webservice()
         .callLoginService(phoneNumber: mobilenumber)
         .then((onResponse) async {
@@ -292,6 +285,9 @@ class _LoginPageState extends State<LoginPage> {
      //  }
      //  print(error);
     });
+  }
+  startLoader() {
+    LoadingDialog.showLoaderDialog(context, 'Please Wait..');
   }
 
   stopLoader() {
