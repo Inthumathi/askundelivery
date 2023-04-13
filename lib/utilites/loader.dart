@@ -1,29 +1,21 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class LoadingDialog {
-  static showLoaderDialog(BuildContext context, String popUpMsg) {
-    showDialog(
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({Key? key}) : super(key: key);
 
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return SvgPicture.asset(
-          'assets/loader.svg',
-          color: Colors.red,
-          height: 25,
-          width: 25,
-        );
-        //   const SizedBox(
-        //   width: 25,
-        //   height: 25,
-        //   child: Image(
-        //     image: AssetImage('assets/loader.gif',),width: 10,height: 10,
-        //   ),
-        // );
-},
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      // backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: SpinKitFadingCircle(
+            color: Colors.blue,
+            size: 50.0,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,15 +1,11 @@
 
 import 'package:askun_delivery_app/Models/register/register.dart';
-import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/otpscreen.dart';
-import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
-import 'package:askun_delivery_app/utilites/loader.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:page_transition/page_transition.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -297,9 +293,9 @@ class _RigisterPageState extends State<RegisterPage> {
   // }
 
 
-  startLoader() {
-    LoadingDialog.showLoaderDialog(context, 'Please Wait..');
-  }
+  // startLoader() {
+  //   const SpinkitCircle();
+  // }
 
   stopLoader() {
     Navigator.of(context).pop();
