@@ -20,41 +20,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _mobileNumberController = TextEditingController();
-  // String hardcodedMobileNumber = "6369739624";
   final _formKey = GlobalKey<FormState>();
-  late LoginResponse loginResponse;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.all(12.0),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       SmallText(
-      //         text: 'Don\'t have an Account?',
-      //         size: 16,
-      //         color: blueGrey,
-      //       ),
-      //       const SizedBox(
-      //         width: 5,
-      //       ),
-      //       InkWell(
-      //           onTap: () {
-      //             Navigator.push(
-      //                 context,
-      //                 PageTransition(
-      //                     type: PageTransitionType.rightToLeft,
-      //                     child: const RegisterPage()));
-      //           },
-      //           child: SmallText(
-      //             text: 'Register',
-      //             fontWeight: FontWeight.w500,
-      //           )),
-      //     ],
-      //   ),
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -86,9 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         heightSpace,
                         heightSpace,
-                        // heightSpace,
-                        // heightSpace,
-                        // heightSpace,
+
                         RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
@@ -193,7 +161,13 @@ class _LoginPageState extends State<LoginPage> {
                                             'Please enter a valid mobile number')),
                                   );
                                 }
-                               else{ _login(_mobileNumberController.text);}
+                               else{
+                                 // _login(_mobileNumberController.text);
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.rightToLeft, child:  OTPScreen()));
+                               }
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width / 3,
@@ -238,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login( String mobilenumber) async {
-    // LoaderScreen();
+
     // networkStatus().then((isReachable) {
     // if (isReachable!) {
 

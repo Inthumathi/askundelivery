@@ -1,3 +1,4 @@
+import 'package:askun_delivery_app/UI%20Screen/homepage/homepage.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
@@ -157,6 +158,11 @@ class _AddressScreenState extends State<AddressScreen> {
                           setState(() {
                             activeAddress = index;
                           });
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child:   HomeScreen(selectedAddress: addressList[activeAddress].streetName)));
                         },
                         child: Padding(
                             padding: const EdgeInsets.only(

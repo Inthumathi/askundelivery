@@ -10,6 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -69,8 +72,9 @@ class Service {
 }
 
 class HomeScreen extends StatefulWidget {
+  final String? selectedAddress;
   const HomeScreen({
-    Key? key,
+    Key? key,this.selectedAddress,
   }) : super(key: key);
 
   @override
@@ -78,6 +82,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   List<DailyNeeds> DailyNeedsList = <DailyNeeds>[
     DailyNeeds(
       cateName: "groceries",
@@ -244,11 +250,62 @@ class _HomeScreenState extends State<HomeScreen> {
   bool onpress = false;
   bool foodPress = false;
   bool askservice = false;
+  String currentAddress = "My Address";
+  String currentPincode = "";
+  String currentCountry = "";
+  String currentState = "";
+  String currentStreet = "";
+  String currentCity = "";
+  Position? currentPosition;
+
+  bool currentLocation = false;
+
 
   @override
   void initState() {
     super.initState();
     selectedLanguage = getFlag('DE');
+    _determinePosition();
+  }
+
+  Future<Position?> _determinePosition() async {
+    bool serviceEnable;
+    LocationPermission permission;
+    serviceEnable = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnable) {
+      Fluttertoast.showToast(msg: "Please keep your location on");
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Fluttertoast.showToast(msg: "Location Permission Denied");
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      Fluttertoast.showToast(msg: "Permission is Denied Forever");
+    }
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    try {
+      List<Placemark> placemarks =
+      await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        currentPosition = position;
+        currentPincode = '${place.postalCode}';
+        currentCountry = '${place.country}';
+        currentState = '${place.administrativeArea}';
+        currentCity = '${place.locality}';
+        currentStreet = '${place.thoroughfare}';
+        currentAddress =
+        "${place.locality},${place.postalCode},${place.country},${place.street},${place.administrativeArea},${place.thoroughfare},${place.thoroughfare}";
+      });
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   void showWidget() {
@@ -620,10 +677,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Row(
                         children: [
-                          SmallText(
+                         widget.selectedAddress== null?SizedBox():  SmallText(text: widget.selectedAddress.toString(),  color: whiteColor,),
+                          currentStreet=="" && widget.selectedAddress== null?   SmallText(
                             text: "Delivery Location",
                             color: whiteColor,
+                          )   :
+                        SmallText(
+                            text: currentStreet,
+                            color: whiteColor,
                           ),
+
                           Padding(
                             padding: const EdgeInsets.only(top: 3.0),
                             child: Icon(

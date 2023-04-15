@@ -1,4 +1,5 @@
 
+import 'package:askun_delivery_app/UI%20Screen/buttom_navigation.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
@@ -6,6 +7,7 @@ import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
@@ -22,7 +24,7 @@ class _OTPScreenState extends State<OTPScreen> {
   String currentText = "";
   final formKey = GlobalKey<FormState>();
   TextEditingController otpController = TextEditingController();
-  String hardCode =  "1234";
+
   // int _counter = 60;
   // late Timer _timer;
 
@@ -194,7 +196,11 @@ class _OTPScreenState extends State<OTPScreen> {
                       //   Fluttertoast.showToast(msg:"Enter valid otp");
                       // }
 
-                      _verifyOTP(otpController.text);
+                      // _verifyOTP(otpController.text);
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft, child:  BottomNavigation()));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 3,
