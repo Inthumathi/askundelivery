@@ -3,10 +3,11 @@ import 'package:askun_delivery_app/UI%20Screen/buttom_navigation.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/optscreen/timer.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/loader.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -196,11 +197,8 @@ class _OTPScreenState extends State<OTPScreen> {
                       //   Fluttertoast.showToast(msg:"Enter valid otp");
                       // }
 
-                      // _verifyOTP(otpController.text);
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft, child:  BottomNavigation()));
+                    _verifyOTP(otpController.text);
+
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 3,
@@ -229,50 +227,39 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
-  // _verifyOTP( String verifyOTP) async {
-  //   Webservice()
-  //       .callVerifyOtpService( otpCode: verifyOTP)
-  //       .then((onResponse) async {
-  //     if (onResponse.) {
-  //       // OTP has been verified successfully
-  //       // Show success message
-  //       print("OTP verified successfully");
-  //     }
-  //   }).catchError((error) async {
-  //
-  //   });
-  // }
-
-  final storage =  const FlutterSecureStorage();
 
 
   _verifyOTP(String verifyOTP) async {
+    startLoader();
     Webservice()
         .callVerifyOtpService(otpCode: verifyOTP)
         .then((onResponse) async {
           print(onResponse!.refresh);
           print(onResponse.access);
-      // if (onResponse. == 200) {
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   prefs.setString("otpVerifyResponse", onResponse!.body.toString());
-      //   await storage.delete(key: 'phone_number');
-      //   await storage.delete(key: 'otp_sent_at');
-      //   // If the server did return a 200 OK response,
-      //   // then parse the JSON.
-      //   Map<String, dynamic> jsonResponse = json.decode(onResponse.body);
-      //   VerifyOtp verifyOtp = VerifyOtp.fromJson(jsonResponse);
-      //   // navigate to the next page here
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => BottomNavigation()),
-      //   );
-      // }
-      // else {
-      //   // handle other status codes here
-      // }
+          stopLoader();
+          if(onResponse.msg=="access token generated successfully"){
+            print(onResponse);
+            print("SUCCESS");
+            await Future.delayed(const Duration(seconds: 2));
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeft, child:  BottomNavigation()));
+          }
+          else{
+            Fluttertoast.showToast(msg: "Invalid OTP");
+
+          }
     }).catchError((error) async {
       // handle errors here
     });
+  }
+  startLoader() {
+    LoadingDialog.showLoaderDialog(context, 'Please Wait..');
+  }
+
+  stopLoader() {
+    Navigator.of(context).pop();
   }
 
 }

@@ -1,4 +1,3 @@
-import 'package:askun_delivery_app/Models/login/login.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:askun_delivery_app/utilites/loader.dart';
@@ -162,11 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 }
                                else{
-                                 // _login(_mobileNumberController.text);
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.rightToLeft, child:  OTPScreen()));
+                                 _login(_mobileNumberController.text);
                                }
                               },
                               child: Container(
@@ -222,7 +217,8 @@ class _LoginPageState extends State<LoginPage> {
         .callLoginService(phoneNumber: mobilenumber)
         .then((onResponse) async {
           stopLoader();
-     if(onResponse!.message=="OTP has been sent to your phone number"||onResponse.message=="New User registered, OTP sent to your Mobile Number" ){
+     if(onResponse!.message=="OTP has been sent to your phone number"||onResponse.message=="New User registered, OTP sent to your Mobile Number" )
+     {
        print(onResponse);
        print("SUCCESS");
        SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -246,18 +242,14 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     }).catchError((error) async {
-     // if (error.toString().contains('User does not exist')) {
-     //    Fluttertoast.showToast(msg: 'User does not exist');
-     //    await Future.delayed(const Duration(seconds: 2));
-     //    Navigator.push(
-     //        context,
-     //        PageTransition(
-     //            type: PageTransitionType.rightToLeft, child: const RegisterPage()));
-     //  }
-     //  else {
-     //    Fluttertoast.showToast(msg: 'Failed to login');
-     //  }
-     //  print(error);
+     if (error.toString().contains('OTP already sent recently, please wait for some time before trying again')) {
+        Fluttertoast.showToast(msg: 'OTP already sent recently, please wait for some time before trying again');
+      }
+      else {
+        Fluttertoast.showToast(msg: 'Failed to login');
+      }
+     stopLoader();
+      print(error);
     });
   }
   startLoader() {

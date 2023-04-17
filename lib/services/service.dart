@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:askun_delivery_app/Models/login/login.dart';
 import 'package:askun_delivery_app/Models/login/otp/otpmodel.dart';
-import 'package:askun_delivery_app/Models/register/register.dart';
 import 'package:askun_delivery_app/utilites/api_constant.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -78,7 +77,7 @@ class Webservice {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Cookie': 'sessionid=5emr3k7t06zwzz9bbmks8zqjm25gfm24',
+      'Cookie': 'sessionid=qpqolu2uy5lfsiptj7t2lhcktbvoqotm',
     };
     Map<String, dynamic> data = {
       'phone_number': phoneNumber,
@@ -154,7 +153,7 @@ class Webservice {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Cookie': 'sessionid=5emr3k7t06zwzz9bbmks8zqjm25gfm24',
+      'Cookie': 'sessionid=qpqolu2uy5lfsiptj7t2lhcktbvoqotm',
     };
     Map<String, dynamic> data = {
       "otp":otpCode
@@ -187,6 +186,9 @@ class Webservice {
 
     else if (response.statusCode == 400) {
       throw Exception("Invalid OTP");
+    }
+    else if (response.statusCode == 500) {
+      throw Exception("OTP already sent recently, please wait for some time before trying again");
     }
     else {
       throw Exception('Failed to login');
