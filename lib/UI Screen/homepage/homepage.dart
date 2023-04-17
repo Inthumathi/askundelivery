@@ -1,8 +1,11 @@
 import 'dart:core';
+import 'package:askun_delivery_app/Models/Category/DailyNeeds.dart';
 import 'package:askun_delivery_app/UI%20Screen/address/address.dart';
 import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/groceirspage.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
+import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
+import 'package:askun_delivery_app/utilites/loader.dart';
 import 'package:askun_delivery_app/utilites/strings.dart';
 import 'package:askun_delivery_app/widget/smalltext.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -260,12 +263,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool currentLocation = false;
 
+  bool _isLoading = false;
+  List<DailyNeedsCategory> _categories = [];
+
 
   @override
   void initState() {
     super.initState();
     selectedLanguage = getFlag('DE');
     _determinePosition();
+    _dailyNeeds();
   }
 
   Future<Position?> _determinePosition() async {
@@ -1166,5 +1173,51 @@ class _HomeScreenState extends State<HomeScreen> {
     // NOTICE: Manage Advanced Drawer state through the Controller.
     // _advancedDrawerController.value = AdvancedDrawerValue.visible();
     _advancedDrawerController.showDrawer();
+  }
+
+
+  // _dailyNeeds() async {
+  //
+  //   // networkStatus().then((isReachable) {
+  //   // if (isReachable!) {
+  //
+  //   startLoader();
+  //
+  //   Webservice().callDailyNeedsService()
+  //       .then((onResponse) async {
+  //     stopLoader();
+  //
+  //
+  //   }).catchError((error) async {
+  //     stopLoader();
+  //     print(error);
+  //   });
+  // }
+
+  Future<void> _dailyNeeds() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final response = await Webservice().callDailyNeedsService();
+      final categories = List<DailyNeedsCategory>.from(response.map((x) => DailyNeedsCategory.fromJson(x)));
+      setState(() {
+        _categories = categories;
+        _isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      // Handle error here
+    }
+  }
+  startLoader() {
+    LoadingDialog.showLoaderDialog(context, 'Please Wait..');
+  }
+
+  stopLoader() {
+    Navigator.of(context).pop();
   }
 }

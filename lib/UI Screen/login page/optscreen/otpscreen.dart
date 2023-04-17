@@ -187,18 +187,12 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      // if(otpController.text == hardCode){
-                      //   Navigator.push(
-                      //       context,
-                      //       PageTransition(
-                      //           type: PageTransitionType.rightToLeft,
-                      //           child: const LoginPage()));
-                      // }else{
-                      //   Fluttertoast.showToast(msg:"Enter valid otp");
-                      // }
-
-                    _verifyOTP(otpController.text);
-
+                      if(otpController.text.length < 4){
+                        Fluttertoast.showToast(msg:"Please enter your OTP");
+                      }
+                      else{
+                        _verifyOTP(otpController.text);
+                      }
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 3,
@@ -252,6 +246,11 @@ class _OTPScreenState extends State<OTPScreen> {
           }
     }).catchError((error) async {
       // handle errors here
+      if (error.toString().contains('Invalid OTP')) {
+        Fluttertoast.showToast(msg: 'Invalid OTP');
+      }
+      stopLoader();
+      print(error);
     });
   }
   startLoader() {

@@ -4,5 +4,6 @@ class ApiConstants {
   static const String registerURL = '${baseUrl}signup/';
   static const String verifyOTP = '${baseUrl}verify-otp/';
   static const String loginURL = '${baseUrl}login/';
+  static const String dailyNeedsURL = '${baseUrl}categories/';
 
 }
