@@ -55,7 +55,7 @@ class Local extends StatelessWidget {
                 )
             )
         ),
-        home:  SplashScreen()
+        home:  const SplashScreen()
     );
   }
 }

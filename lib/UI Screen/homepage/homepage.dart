@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:askun_delivery_app/Models/Category/DailyNeeds.dart';
 import 'package:askun_delivery_app/UI%20Screen/address/address.dart';
-import 'package:askun_delivery_app/UI%20Screen/categories/dailyneeds/groceirspage.dart';
 import 'package:askun_delivery_app/UI%20Screen/login%20page/login.dart';
 import 'package:askun_delivery_app/services/service.dart';
 import 'package:askun_delivery_app/utilites/constant.dart';
@@ -42,23 +41,15 @@ class Language {
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Image.asset(item, fit: BoxFit.cover, width: 1000.0)),
-          ),
-        ))
+      margin: const EdgeInsets.all(5.0),
+      child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+          child: Image.asset(item, fit: BoxFit.cover, width: 1000.0)),
+    ))
     .toList();
 
 // Categories
 
-class DailyNeeds {
-  final String cateName;
-  final String img;
-
-  DailyNeeds({required this.cateName, required this.img});
-}
 
 class Food {
   final String cateName;
@@ -85,34 +76,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
-  List<DailyNeeds> DailyNeedsList = <DailyNeeds>[
-    DailyNeeds(
-      cateName: "groceries",
-      img: MyStrings.img3,
-    ),
-    DailyNeeds(
-      cateName: "meat",
-      img: MyStrings.img3,
-    ),
-    DailyNeeds(
-      cateName: "vegetableandFruits",
-      img: MyStrings.img3,
-    ),
-    DailyNeeds(
-      cateName: "dairyProducts",
-      img: MyStrings.img3,
-    ),
-    DailyNeeds(
-      cateName: "prasadatu",
-      img: MyStrings.img3,
-    ),
-    DailyNeeds(
-      cateName: "homeFoods",
-      img: MyStrings.img3,
-    ),
-  ];
 
   List<Food> Foodlist = <Food>[
     Food(
@@ -250,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final CarouselController _controller = CarouselController();
   late String selectedLanguage;
   final _advancedDrawerController = AdvancedDrawerController();
-  bool onpress = false;
+
   bool foodPress = false;
   bool askservice = false;
   String currentAddress = "My Address";
@@ -263,16 +226,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool currentLocation = false;
 
-  bool _isLoading = false;
-  List<DailyNeedsCategory> _categories = [];
-
+  final bool _isLoading = false;
+  List<DailyNeedsCategory> categories = [];
+  // List<DailyNeedsCategory>? categories;
 
   @override
   void initState() {
     super.initState();
     selectedLanguage = getFlag('DE');
     _determinePosition();
-    _dailyNeeds();
+    getDailyNeedsCategory();
   }
 
   Future<Position?> _determinePosition() async {
@@ -315,41 +278,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return null;
   }
 
-  void showWidget() {
-    setState(() {
-      onpress = true;
-    });
-  }
-
-  void showWidget1() {
-    setState(() {
-      foodPress = true;
-    });
-  }
-
-  void showWidget2() {
-    setState(() {
-      askservice = true;
-    });
-  }
-
-  void hideWidget() {
-    setState(() {
-      onpress = false;
-    });
-  }
-
-  void hideWidget1() {
-    setState(() {
-      foodPress = false;
-    });
-  }
-
-  void hideWidget2() {
-    setState(() {
-      askservice = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // openScale: 1.0,
       disabledGestures: false,
       childDecoration: const BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(16))),
+          borderRadius:  BorderRadius.all(Radius.circular(16))),
       drawer: SafeArea(
         child: ListTileTheme(
           textColor: Colors.black,
@@ -403,10 +331,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: primaryColor,
                             size: 28.0,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Container(
+                          SizedBox(
                               width: MediaQuery.of(context).size.width / 2.4,
                               child: SmallText(
                                 text: 'Venkata Narasimha',
@@ -415,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               )),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -425,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: primaryColor,
                             size: 28.0,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           SmallText(
@@ -450,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
               heightSpace,
               heightSpace,
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30),
+                contentPadding: const EdgeInsets.only(left: 30),
                 onTap: () {},
                 leading: const Image(
                   image: AssetImage('assets/drawer/orderhistoy.png'),
@@ -461,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
                 leading: const Image(
                   image: AssetImage('assets/drawer/offer.png'),
@@ -472,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
                 leading: const Image(
                   image: AssetImage('assets/drawer/wallet.png'),
@@ -483,10 +411,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/refer.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/refer.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.refer,
@@ -494,10 +422,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/complain.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/complain.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.allCompliant,
@@ -505,10 +433,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/replacement.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/replacement.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.replacementRequest,
@@ -516,10 +444,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/rateus.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/rateus.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.rateUs,
@@ -527,10 +455,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/faq.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/faq.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.faq,
@@ -538,10 +466,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/about.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/about.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.aboutUs,
@@ -549,10 +477,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/terms.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/terms.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.termsOfUse,
@@ -560,10 +488,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {},
-                leading: Image(
-                  image: const AssetImage('assets/drawer/privacy.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/privacy.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.privacyAndpolicy,
@@ -571,18 +499,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ListTile(
-                contentPadding: EdgeInsets.only(left: 30, top: 5),
+                contentPadding: const EdgeInsets.only(left: 30, top: 5),
                 onTap: () {
                   Navigator.of(context)
                       .pushAndRemoveUntil(
                     CupertinoPageRoute(
-                        builder: (context) => LoginPage()
+                        builder: (context) => const LoginPage()
                     ),
                         (_) => false,
                   );
                 },
-                leading: Image(
-                  image: const AssetImage('assets/drawer/logout.png'),
+                leading: const Image(
+                  image: AssetImage('assets/drawer/logout.png'),
                 ),
                 title: SmallText(
                   text: MyStrings.logOut,
@@ -606,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 valueListenable: _advancedDrawerController,
                 builder: (_, value, __) {
                   return AnimatedSwitcher(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     child: Icon(
                       value.visible ? Icons.clear : Icons.menu,
                       key: ValueKey<bool>(value.visible),
@@ -618,7 +546,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.notifications, size: 30),
+                icon: const Icon(Icons.notifications, size: 30),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -640,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Padding(
@@ -649,7 +577,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     launch("tel:9502572662");
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.call,
                     size: 30.0,
                     color: Colors.white,
@@ -658,7 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(35.0),
+              preferredSize: const Size.fromHeight(35.0),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: InkWell(
@@ -679,12 +607,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 20,
                         color: whiteColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Row(
                         children: [
-                         widget.selectedAddress== null?SizedBox():  SmallText(text: widget.selectedAddress.toString(),  color: whiteColor,),
+                         widget.selectedAddress== null?const SizedBox():  SmallText(text: widget.selectedAddress.toString(),  color: whiteColor,),
                           currentStreet=="" && widget.selectedAddress== null?   SmallText(
                             text: "Delivery Location",
                             color: whiteColor,
@@ -739,7 +667,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         width: 12.0,
                         height: 12.0,
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -814,107 +742,244 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.bold,
                             size: 20,
                           ),
-                          onpress == false
-                              ? InkWell(
-                                  onTap: () {
-                                    showWidget();
-                                    print("Expand");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text("See More",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: seeColor,
-                                              fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.arrow_drop_down_outlined,
-                                        size: 35,
-                                        color: primaryColor,
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : InkWell(
-                                  onTap: () {
-                                    hideWidget();
-                                    print("Compress");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text("See Less",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: seeColor,
-                                              fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.arrow_drop_up_sharp,
-                                        size: 35,
-                                        color: primaryColor,
-                                      )
-                                    ],
-                                  ),
-                                ),
+                          InkWell(
+                            onTap: () {
+                            },
+                            child: Text("See More",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,decoration: TextDecoration.underline,)),
+                          )
+                          // onpress == false
+                          //     ? InkWell(
+                          //         onTap: () {
+                          //           showWidget();
+                          //           print("Expand");
+                          //         },
+                          //         child: Row(
+                          //           children: [
+                          //             Text("See More",
+                          //                 style: TextStyle(
+                          //                     fontSize: 17,
+                          //                     color: seeColor,
+                          //                     fontWeight: FontWeight.bold)),
+                          //             Icon(
+                          //               Icons.arrow_drop_down_outlined,
+                          //               size: 35,
+                          //               color: primaryColor,
+                          //             )
+                          //           ],
+                          //         ),
+                          //       )
+                          //     : InkWell(
+                          //         onTap: () {
+                          //           hideWidget();
+                          //           print("Compress");
+                          //         },
+                          //         child: Row(
+                          //           children: [
+                          //             Text("See Less",
+                          //                 style: TextStyle(
+                          //                     fontSize: 17,
+                          //                     color: seeColor,
+                          //                     fontWeight: FontWeight.bold)),
+                          //             Icon(
+                          //               Icons.arrow_drop_up_sharp,
+                          //               size: 35,
+                          //               color: primaryColor,
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
                         ],
                       ),
                       heightSpace,
+                      // GridView.builder(
+                      //     gridDelegate:
+                      //         const SliverGridDelegateWithFixedCrossAxisCount(
+                      //       childAspectRatio: 2 / 2.2,
+                      //       crossAxisCount: 3,
+                      //       mainAxisSpacing: 10,
+                      //       crossAxisSpacing: 10,
+                      //     ),
+                      //     itemCount:
+                      //         onpress == true ? DailyNeedsList.length : 6,
+                      //     primary: false,
+                      //     physics: NeverScrollableScrollPhysics(),
+                      //     // controller: ScrollController(keepScrollOffset: false),
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //     shrinkWrap: true,
+                      //     itemBuilder: (BuildContext ctx, index) {
+                      //       return GestureDetector(
+                      //         onTap: () {
+                      //           DailyNeedsList[index].cateName == 'groceries'?
+                      //           Navigator.push(
+                      //               context,
+                      //               PageTransition(
+                      //                   type: PageTransitionType.rightToLeft,
+                      //                   child: GroceriesPage())) :
+                      //
+                      //           SizedBox();
+                      //         },
+                      //         child: Card(
+                      //           elevation: 5,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(15),
+                      //           ),
+                      //           child: Container(
+                      //               decoration: BoxDecoration(
+                      //                   color: containerColor,
+                      //                   borderRadius: BorderRadius.circular(15),
+                      //                   border: Border.all(
+                      //                       color:
+                      //                           primaryColor.withOpacity(0.4))),
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.all(8.0),
+                      //                 child: Column(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Image.asset(
+                      //                       DailyNeedsList[index].img,
+                      //                     ),
+                      //                     heightSpace,
+                      //                     SmallText(
+                      //                       text: DailyNeedsList[index]
+                      //                           .cateName
+                      //                           .tr(),
+                      //                       color: primaryColor,
+                      //                       fontWeight: FontWeight.bold,
+                      //                       size: 14,
+                      //                       textAlign: TextAlign.center,
+                      //                       maxline: 1,
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               )),
+                      //         ),
+                      //       );
+                      //     }),
+                      _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                      :
+                      //
+                      // GridView.builder(
+                      //     gridDelegate:
+                      //         const SliverGridDelegateWithFixedCrossAxisCount(
+                      //       childAspectRatio: 2 / 2.2,
+                      //       crossAxisCount: 3,
+                      //       mainAxisSpacing: 10,
+                      //       crossAxisSpacing: 10,
+                      //     ),
+                      //     itemCount:
+                      //         onpress == true ? DailyNeedsList.length : 6,
+                      //     primary: false,
+                      //     physics: NeverScrollableScrollPhysics(),
+                      //     // controller: ScrollController(keepScrollOffset: false),
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //     shrinkWrap: true,
+                      //     itemBuilder: (BuildContext ctx, index) {
+                      //       return GestureDetector(
+                      //         onTap: () {
+                      //           DailyNeedsList[index].cateName == 'groceries'?
+                      //           Navigator.push(
+                      //               context,
+                      //               PageTransition(
+                      //                   type: PageTransitionType.rightToLeft,
+                      //                   child: GroceriesPage())) :
+                      //
+                      //           SizedBox();
+                      //         },
+                      //         child: Card(
+                      //           elevation: 5,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(15),
+                      //           ),
+                      //           child: Container(
+                      //               decoration: BoxDecoration(
+                      //                   color: containerColor,
+                      //                   borderRadius: BorderRadius.circular(15),
+                      //                   border: Border.all(
+                      //                       color:
+                      //                           primaryColor.withOpacity(0.4))),
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.all(8.0),
+                      //                 child: Column(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.center,
+                      //                   children: [
+                      //                     Image.asset(
+                      //                       DailyNeedsList[index].img,
+                      //                     ),
+                      //                     heightSpace,
+                      //                     SmallText(
+                      //                       text: DailyNeedsList[index]
+                      //                           .cateName
+                      //                           .tr(),
+                      //                       color: primaryColor,
+                      //                       fontWeight: FontWeight.bold,
+                      //                       size: 14,
+                      //                       textAlign: TextAlign.center,
+                      //                       maxline: 1,
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               )),
+                      //         ),
+                      //       );
+                      //     }),
+
                       GridView.builder(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 2 / 2.2,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                           ),
-                          itemCount:
-                              onpress == true ? DailyNeedsList.length : 6,
+                          itemCount:categories.length,
+
                           primary: false,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
-
-
-
-
-
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
                               onTap: () {
-                                DailyNeedsList[index].cateName == 'groceries'?
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.rightToLeft,
-                                        child: GroceriesPage())) :
-
-                                SizedBox();
                               },
                               child: Card(
-                                elevation: 5,
+                                elevation: 3,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: containerColor,
-                                        borderRadius: BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(5),
                                         border: Border.all(
                                             color:
-                                                primaryColor.withOpacity(0.4))),
+                                            primaryColor.withOpacity(0.4))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
-                                          Image.asset(
-                                            DailyNeedsList[index].img,
+                                         Image.network(
+                                            categories[index].categoryImg.toString(),
                                           ),
                                           heightSpace,
                                           SmallText(
-                                            text: DailyNeedsList[index]
-                                                .cateName
-                                                .tr(),
+                                            text: categories[index].name.toString(),
                                             color: primaryColor,
                                             fontWeight: FontWeight.bold,
                                             size: 14,
@@ -938,53 +1003,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             size: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                          foodPress == false
-                              ? InkWell(
-                                  onTap: () {
-                                    showWidget1();
-                                    print("Expand");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text("See More",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: seeColor,
-                                              fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.arrow_drop_down_outlined,
-                                        size: 35,
-                                        color: primaryColor,
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : InkWell(
-                                  onTap: () {
-                                    hideWidget1();
-                                    print("Compress");
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text("See Less",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: seeColor,
-                                              fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.arrow_drop_up_sharp,
-                                        size: 35,
-                                        color: primaryColor,
-                                      )
-                                    ],
-                                  ),
-                                ),
+
                         ],
                       ),
                       heightSpace,
                       GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 2 / 2.2,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10,
@@ -992,7 +1017,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           itemCount: foodPress == true ? Foodlist.length : 6,
                           primary: false,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
@@ -1003,13 +1028,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Card(
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(5),
 
                                 ),
                                 child: Container(
                                     decoration: BoxDecoration(
                                       color: containerColor,
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(5),
                                         border: Border.all(
                                             color:
                                             primaryColor.withOpacity(0.4))
@@ -1049,58 +1074,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             size: 20,
                             fontWeight: FontWeight.bold,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              askservice == false
-                                  ? InkWell(
-                                      onTap: () {
-                                        showWidget2();
-                                        print("Expand");
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text("See More",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: seeColor,
-                                                  fontWeight: FontWeight.bold)),
-                                          Icon(
-                                            Icons.arrow_drop_down_outlined,
-                                            size: 35,
-                                            color: primaryColor,
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  : InkWell(
-                                      onTap: () {
-                                        hideWidget2();
-                                        print("Compress");
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text("See Less",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: seeColor,
-                                                  fontWeight: FontWeight.bold)),
-                                          Icon(
-                                            Icons.arrow_drop_up_sharp,
-                                            size: 35,
-                                            color: primaryColor,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                            ],
-                          ),
                         ],
                       ),
                       heightSpace,
                       GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 2 / 2.2,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10,
@@ -1108,7 +1087,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           itemCount:askservice == true? AskforService.length : 6,
                           primary: false,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           // controller: ScrollController(keepScrollOffset: false),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext ctx, index) {
@@ -1117,12 +1096,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Card(
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Container(
                                     decoration: BoxDecoration(
                                       color: containerColor,
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(5),
                                         border: Border.all(
                                             color:
                                             primaryColor.withOpacity(0.4))
@@ -1175,44 +1154,17 @@ class _HomeScreenState extends State<HomeScreen> {
     _advancedDrawerController.showDrawer();
   }
 
+  void getDailyNeedsCategory() async {
+    Webservice().getCategory().then((response) {
+      setState(() {
+        categories = response;
+      });
 
-  // _dailyNeeds() async {
-  //
-  //   // networkStatus().then((isReachable) {
-  //   // if (isReachable!) {
-  //
-  //   startLoader();
-  //
-  //   Webservice().callDailyNeedsService()
-  //       .then((onResponse) async {
-  //     stopLoader();
-  //
-  //
-  //   }).catchError((error) async {
-  //     stopLoader();
-  //     print(error);
-  //   });
-  // }
-
-  Future<void> _dailyNeeds() async {
-    setState(() {
-      _isLoading = true;
+    }).catchError((error) {// print any error to the console
     });
-
-    try {
-      final response = await Webservice().callDailyNeedsService();
-      final categories = List<DailyNeedsCategory>.from(response.map((x) => DailyNeedsCategory.fromJson(x)));
-      setState(() {
-        _categories = categories;
-        _isLoading = false;
-      });
-    } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      // Handle error here
-    }
   }
+
+// The rest of your widget code goes here...
   startLoader() {
     LoadingDialog.showLoaderDialog(context, 'Please Wait..');
   }
